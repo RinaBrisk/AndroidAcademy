@@ -1,0 +1,144 @@
+<?xml version="1.0" encoding="utf-8"?>
+
+<ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical">
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal">
+
+        <ImageView
+            android:id="@+id/photo"
+            android:layout_width="@dimen/photo_land"
+            android:layout_height="match_parent"
+            android:scaleType="centerCrop"
+            app:srcCompat="@drawable/photo" />
+
+        <LinearLayout
+            android:id="@+id/information"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="vertical"
+            android:paddingEnd="@dimen/paddingEnd"
+            android:paddingStart="@dimen/paddingStart">
+
+            <LinearLayout
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:orientation="horizontal">
+
+                <ImageView
+                    android:id="@+id/ic_study"
+                    android:layout_width="@dimen/ic_size"
+                    android:layout_height="@dimen/ic_size"
+                    android:layout_margin="@dimen/margin"
+                    app:srcCompat="@mipmap/ic_study" />
+
+                <TextView
+                    android:id="@+id/tv_keyInfo_Study"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="center"
+                    android:layout_margin="@dimen/margin"
+                    android:text="@string/keyInfo_Study"
+                    android:textColor="@android:color/black"
+                    android:textSize="@dimen/textSize" />
+
+            </LinearLayout>
+
+            <LinearLayout
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:orientation="horizontal">
+
+                <ImageView
+                    android:id="@+id/ic_android"
+                    android:layout_width="@dimen/ic_size"
+                    android:layout_height="@dimen/ic_size"
+                    android:layout_margin="@dimen/margin"
+                    app:srcCompat="@mipmap/ic_android" />
+
+                <TextView
+                    android:id="@+id/tv_keyInfo_Android"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="center"
+                    android:layout_margin="@dimen/margin"
+                    android:text="@string/keyInfo_Android"
+                    android:textColor="@android:color/black"
+                    android:textSize="@dimen/textSize" />
+
+            </LinearLayout>
+
+            <View
+                android:layout_width="match_parent"
+                android:layout_height="1dp"
+                android:background="@color/colorAccent" />
+
+            <TextView
+                android:id="@+id/tv_description"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:paddingBottom="@dimen/paddingBottom"
+                android:paddingTop="@dimen/paddingTop"
+                android:text="@string/description"
+                android:textColor="@android:color/black"
+                android:textSize="@dimen/textSize" />
+
+            <View
+                android:layout_width="match_parent"
+                android:layout_height="1dp"
+                android:background="@color/colorAccent" />
+
+            <EditText
+                android:id="@+id/et_feedback"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:paddingTop="@dimen/paddingTop"
+                android:text="@string/feedback"
+                android:textSize="@dimen/textSize" />
+
+            <Button
+                android:id="@+id/btn_sendMessage"
+                android:layout_width="wrap_content"
+                android:layout_height="@dimen/btn_height"
+                android:layout_gravity="end"
+                android:background="@android:color/transparent"
+                android:text="@string/btn_sendMessage"
+                android:textColor="@color/colorAccent" />
+
+            <LinearLayout
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center"
+                android:orientation="horizontal">
+
+                <Button
+                    android:id="@+id/btn_vk"
+                    android:layout_width="@dimen/btn_social_size"
+                    android:layout_height="@dimen/btn_social_size"
+                    android:background="@mipmap/ic_vk" />
+
+                <Button
+                    android:id="@+id/btn_git"
+                    android:layout_width="@dimen/btn_social_size"
+                    android:layout_height="@dimen/btn_social_size"
+                    android:background="@mipmap/ic_git" />
+
+                <Button
+                    android:id="@+id/btn_telegram"
+                    android:layout_width="@dimen/btn_social_size"
+                    android:layout_height="@dimen/btn_social_size"
+                    android:background="@mipmap/ic_telegram" />
+
+            </LinearLayout>
+
+        </LinearLayout>
+
+    </LinearLayout>
+
+</ScrollView>

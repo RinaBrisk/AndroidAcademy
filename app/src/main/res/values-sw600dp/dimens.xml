@@ -1,0 +1,16 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+        <dimen name="textSize">24sp</dimen>
+        <dimen name="textSize_disclaimer">20sp</dimen>
+        <dimen name="photo">320dp</dimen>
+        <dimen name="photo_land">400dp</dimen>
+        <dimen name="paddingEnd">16dp</dimen>
+        <dimen name="paddingStart">36dp</dimen>
+        <dimen name="paddingStart_land">24dp</dimen>
+        <dimen name="paddingBottom">16dp</dimen>
+        <dimen name="paddingTop">16dp</dimen>
+        <dimen name="ic_size">32dp</dimen>
+        <dimen name="margin">8dp</dimen>
+        <dimen name="btn_height">48dp</dimen>
+        <dimen name="btn_social_size">56dp</dimen>
+</resources>

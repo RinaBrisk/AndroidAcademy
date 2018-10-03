@@ -1,0 +1,14 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="keyInfo_Android">Начинающий Андроид разработчик</string>
+    <string name="keyInfo_Study">Студентка МТУСИ</string>
+    <string name="description">На данный момент Рина является студенткой
+        Московского технического университета связи и информатики. Она начала изучать
+        Андроид разработку несколько месяцев назад. Ранее она знакомилась с другими отраслями программирования,
+        но Андрод разработка заинтересовала ее больше всего. </string>
+    <string name="feedback">Введите сообщение…</string>
+    <string name="btn_sendMessage">Отправить сообщение</string>
+    <string name="address">rina_sergeeva@bk.ru</string>
+    <string name="chooser">Почтовые приложения</string>
+    <string name="toast">Выберите приложение…</string>
+</resources>

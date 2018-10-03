@@ -1,0 +1,15 @@
+<resources>
+    <string name="app_name" translatable="false">NewsApp</string>
+    <string name="disclaimer" translatable="false">© 2018 Rina Sergeeva</string>
+    <string name="keyInfo_Android">Beginning Android developer</string>
+    <string name="keyInfo_Study">MTUCI student</string>
+    <string name="description">At the moment Rina is a third-year student of the Moscow
+        Technical University of Communications and Informatics. She has started studying
+        Android development a few months ago. Previously, she got acquainted with other
+        branches of programming, but she is mostly interested in android development now. </string>
+    <string name="feedback">Enter a message…</string>
+    <string name="btn_sendMessage">send message</string>
+    <string name="address">rina_sergeeva@bk.ru</string>
+    <string name="chooser">Email apps</string>
+    <string name="toast">Choose app…</string>
+</resources>
