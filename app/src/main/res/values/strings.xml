@@ -12,4 +12,5 @@
     <string name="address">rina_sergeeva@bk.ru</string>
     <string name="chooser">Email apps</string>
     <string name="toast">Choose app…</string>
+    <string name="about">About</string>
 </resources>

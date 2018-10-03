@@ -11,4 +11,5 @@
     <string name="address">rina_sergeeva@bk.ru</string>
     <string name="chooser">Почтовые приложения</string>
     <string name="toast">Выберите приложение…</string>
+    <string name="about">О разработчике</string>
 </resources>
