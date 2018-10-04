@@ -23,7 +23,7 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:orientation="vertical"
-            android:paddingEnd="@dimen/paddingEnd"
+            android:paddingEnd="@dimen/paddingEnd_about"
             android:paddingStart="@dimen/paddingStart_land">
 
             <LinearLayout
@@ -35,7 +35,7 @@
                     android:id="@+id/ic_study"
                     android:layout_width="@dimen/ic_size"
                     android:layout_height="@dimen/ic_size"
-                    android:layout_margin="@dimen/margin"
+                    android:layout_margin="@dimen/margin_about"
                     app:srcCompat="@mipmap/ic_study" />
 
                 <TextView
@@ -46,7 +46,7 @@
                     android:layout_margin="@dimen/margin"
                     android:text="@string/keyInfo_Study"
                     android:textColor="@android:color/black"
-                    android:textSize="@dimen/textSize" />
+                    android:textSize="@dimen/textSize_about" />
 
             </LinearLayout>
 
@@ -59,7 +59,7 @@
                     android:id="@+id/ic_android"
                     android:layout_width="@dimen/ic_size"
                     android:layout_height="@dimen/ic_size"
-                    android:layout_margin="@dimen/margin"
+                    android:layout_margin="@dimen/margin_about"
                     app:srcCompat="@mipmap/ic_android" />
 
                 <TextView
@@ -67,10 +67,10 @@
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:layout_gravity="center"
-                    android:layout_margin="@dimen/margin"
+                    android:layout_margin="@dimen/margin_about"
                     android:text="@string/keyInfo_Android"
                     android:textColor="@android:color/black"
-                    android:textSize="@dimen/textSize" />
+                    android:textSize="@dimen/textSize_about" />
 
             </LinearLayout>
 
@@ -83,9 +83,9 @@
                 android:id="@+id/tv_description"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:paddingBottom="@dimen/paddingBottom"
-                android:paddingTop="@dimen/paddingTop"
-                android:textSize="@dimen/textSize"
+                android:paddingBottom="@dimen/paddingBottom_about"
+                android:paddingTop="@dimen/paddingTop_about"
+                android:textSize="@dimen/textSize_about"
                 android:text="@string/description"
                 android:textColor="@android:color/black" />
 
@@ -98,9 +98,9 @@
                 android:id="@+id/et_feedback"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:paddingTop="@dimen/paddingTop"
+                android:paddingTop="@dimen/paddingTop_about"
                 android:text="@string/feedback"
-                android:textSize="@dimen/textSize" />
+                android:textSize="@dimen/textSize_about" />
 
             <Button
                 android:id="@+id/btn_sendMessage"

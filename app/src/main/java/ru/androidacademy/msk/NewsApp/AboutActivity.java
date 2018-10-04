@@ -1,8 +1,8 @@
 package ru.androidacademy.msk.NewsApp;
 
+import android.app.Activity;
 import android.content.Intent;
 import android.net.Uri;
-import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.view.Gravity;
 import android.view.View;
@@ -12,7 +12,7 @@ import android.widget.LinearLayout;
 import android.widget.TextView;
 import android.widget.Toast;
 
-public class AboutActivity extends AppCompatActivity {
+public class AboutActivity extends Activity {
 
     private static final String VK_URL = "https://vk.com/sergeeva_rina7";
     private static final String GIT_URL = "https://github.com/RinaBrisk";

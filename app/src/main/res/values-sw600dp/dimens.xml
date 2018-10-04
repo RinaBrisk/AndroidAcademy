@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
-        <dimen name="textSize">24sp</dimen>
+        <dimen name="textSize_about">24sp</dimen>
         <dimen name="textSize_disclaimer">20sp</dimen>
         <dimen name="photo">320dp</dimen>
         <dimen name="photo_land">400dp</dimen>
