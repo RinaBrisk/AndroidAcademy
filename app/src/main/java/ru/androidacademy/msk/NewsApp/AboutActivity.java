@@ -12,7 +12,9 @@ import android.widget.LinearLayout;
 import android.widget.TextView;
 import android.widget.Toast;
 
-public class AboutActivity extends Activity {
+import androidx.appcompat.app.AppCompatActivity;
+
+public class AboutActivity extends AppCompatActivity {
 
     private static final String VK_URL = "https://vk.com/sergeeva_rina7";
     private static final String GIT_URL = "https://github.com/RinaBrisk";

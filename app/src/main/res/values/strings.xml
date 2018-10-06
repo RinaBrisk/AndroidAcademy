@@ -13,4 +13,8 @@
     <string name="chooser">Email apps</string>
     <string name="toast">Choose app…</string>
     <string name="about">About</string>
+    <string name="title">Title</string>
+    <string name="category">Category</string>
+    <string name="preview_text">Preview text\n…\n…\n…</string>
+    <string name="published_data">Published data</string>
 </resources>

@@ -4,15 +4,14 @@
     xmlns:card_view="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
-    android:layout_height="match_parent"
+    android:layout_height="wrap_content"
     android:orientation="vertical">
 
     <androidx.cardview.widget.CardView xmlns:card_view="http://schemas.android.com/apk/res-auto"
         android:id="@+id/card_view"
         style="@style/NewsList"
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        card_view:cardBackgroundColor="@color/backgroundNewsList">
+        android:layout_height="wrap_content">
 
         <LinearLayout
             android:layout_width="match_parent"
@@ -23,7 +22,7 @@
                 android:id="@+id/tv_category"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:text="Заголовок"
+                android:text="@string/category"
                 android:textAllCaps="true"
                 android:textColor="@color/colorPrimary"
                 android:textSize="@dimen/textSize_category" />
@@ -43,7 +42,7 @@
                         android:id="@+id/tv_title"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
-                        android:text="Заголовок"
+                        android:text="@string/title"
                         android:textColor="@android:color/black"
                         android:textSize="@dimen/textSize_title"
                         android:textStyle="bold" />
@@ -53,7 +52,7 @@
                         android:layout_width="match_parent"
                         android:layout_height="@dimen/height_preview_text"
                         android:maxLines="4"
-                        android:text="Preview text блаб абала бабалабалаа баабааб аблабалаба jjjhjh jhjhjhjh kjkj kjkjkj kjkj ggffff yyyyy yyyyyy 7yyyyyyy yyyyyyyy yyyyyyy yyyyyy uuuuuuuuuu  y  y  yyyyyyyyyy ujhhjhbngtuiuh fgfbjfij ijivjdvij rfidjvdijfv dijfvdivjvifj ijvdfvijdv   irjdivjv rvijdvidjvij"
+                        android:text="@string/preview_text"
                         android:textColor="@android:color/black"
                         android:textSize="@dimen/textSize_preview_text" />
 
@@ -63,8 +62,10 @@
                     android:id="@+id/heading_image"
                     android:layout_width="@dimen/heading_image"
                     android:layout_height="@dimen/heading_image"
-                    android:layout_gravity="center"
+                    android:layout_gravity="top"
+                    android:layout_marginStart="@dimen/marginStart_headingImage"
                     android:layout_weight="1"
+                    android:contentDescription="@null"
                     android:scaleType="centerCrop"
                     tools:src="@tools:sample/avatars" />
 
@@ -75,7 +76,7 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:paddingTop="@dimen/paddingTop_publishedData"
-                android:text="12 октября 2018г."
+                android:text="@string/published_data"
                 android:textColor="@android:color/darker_gray"
                 android:textSize="@dimen/textSize_published_data" />
 

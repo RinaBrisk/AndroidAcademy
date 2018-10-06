@@ -16,6 +16,7 @@
             android:id="@+id/photo"
             android:layout_width="wrap_content"
             android:layout_height="@dimen/photo"
+            android:contentDescription="@null"
             android:scaleType="centerCrop"
             app:srcCompat="@drawable/photo" />
 
