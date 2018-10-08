@@ -1,6 +1,7 @@
 package ru.androidacademy.msk.NewsApp;
 
 import android.content.Context;
+import android.graphics.drawable.Drawable;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -34,7 +35,7 @@ public class NewsRecyclerAdapter extends RecyclerView.Adapter<NewsRecyclerAdapte
         public final TextView publishedData;
 
         public ViewHolder(View inflate){
-            super(inflate);                   //инициалзация родительского(супер-класса)RecyclerView.ViewHolder
+            super(inflate);                  //инициалзация родительского(супер-класса)RecyclerView.ViewHolder
             category = itemView.findViewById(R.id.tv_category);
             title = itemView.findViewById(R.id.tv_title);
             previewText = itemView.findViewById(R.id.tv_preview_text);

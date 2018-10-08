@@ -1,14 +1,17 @@
 package ru.androidacademy.msk.NewsApp;
 
-import android.app.Activity;
 import android.content.Intent;
+import android.content.res.Configuration;
 import android.os.Bundle;
 import android.view.Menu;
 import android.view.MenuItem;
+import android.view.View;
+
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.recyclerview.widget.GridLayoutManager;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
@@ -22,7 +25,17 @@ public class NewsListActivity extends AppCompatActivity {
 
         RecyclerView recyclerView = findViewById(R.id.recycler_view);
         recyclerView.setAdapter(new NewsRecyclerAdapter(this, DataUtils.generateNews()));
-        recyclerView.setLayoutManager(new LinearLayoutManager(this));
+
+        if (getResources().getConfiguration().orientation == Configuration.ORIENTATION_PORTRAIT) {
+            LinearLayoutManager linearLayoutManager = new LinearLayoutManager(this);
+            recyclerView.setLayoutManager(linearLayoutManager);
+        } else {
+            GridLayoutManager gridLayoutManager = new GridLayoutManager(this, 2);
+            recyclerView.setLayoutManager(gridLayoutManager);
+        }
+        DividerNewsItemDecoration dividerItemDecoration = new DividerNewsItemDecoration(recyclerView.getContext());
+        recyclerView.addItemDecoration(dividerItemDecoration);
+
     }
 
     @Override
