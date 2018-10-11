@@ -17,4 +17,5 @@
     <string name="category">Category</string>
     <string name="preview_text">Preview text\n…\n…\n…</string>
     <string name="published_data">Published data</string>
+    <string name="full_text">Full text\n...\n...\n...\n...\n...</string>
 </resources>
