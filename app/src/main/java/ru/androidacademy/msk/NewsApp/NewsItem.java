@@ -1,5 +1,6 @@
 package ru.androidacademy.msk.NewsApp;
 
+import java.io.Serializable;
 import java.util.Date;
 
 public class NewsItem {

@@ -12,7 +12,7 @@
         android:orientation="vertical">
 
         <ImageView
-            android:id="@+id/heading_image"
+            android:id="@+id/heading_image_details"
             android:layout_width="match_parent"
             android:layout_height="@dimen/heading_details_image"
             android:layout_gravity="top"
@@ -28,7 +28,7 @@
             android:paddingEnd="@dimen/paddingEnd_details">
 
             <TextView
-                android:id="@+id/tv_title"
+                android:id="@+id/tv_title_details"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_marginTop="@dimen/margin_title_details"
@@ -39,7 +39,7 @@
                 android:textStyle="bold" />
 
             <TextView
-                android:id="@+id/tv_published_data"
+                android:id="@+id/tv_published_data_details"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:text="@string/published_data"

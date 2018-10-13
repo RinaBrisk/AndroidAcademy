@@ -5,16 +5,12 @@ import android.content.res.Configuration;
 import android.os.Bundle;
 import android.view.Menu;
 import android.view.MenuItem;
-import android.view.View;
-import android.widget.Toast;
 
-
-import java.util.zip.Inflater;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
-import androidx.appcompat.app.ActionBar;
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.core.app.NavUtils;
 import androidx.recyclerview.widget.GridLayoutManager;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
@@ -22,13 +18,12 @@ import androidx.recyclerview.widget.RecyclerView;
 
 public class NewsListActivity extends AppCompatActivity {
 
-    private static final String KEY_EXTRA = "KEY_EXTRA";
-
     private final NewsRecyclerAdapter.OnItemClickListener clickListener = newsItem -> {
-        Intent intent = new Intent(this, NewsDetailsActivity.class);
-        //intent.putExtra(KEY_EXTRA, )
-        //startActivity();
-
+        startActivity(NewsDetailsActivity.createIntent(this, newsItem.getImageUrl(),
+                newsItem.getTitle(),
+                newsItem.getPublishDate().toString(),
+                newsItem.getFullText(),
+                newsItem.getCategory().getName()));
     };
 
     @Override
@@ -36,13 +31,13 @@ public class NewsListActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_news_list);
 
-       // ActionBar ab = getSupportActionBar();
+        // ActionBar ab = getSupportActionBar();
         //if (ab != null) {
-           // ab.setDisplayHomeAsUpEnabled(true);
-       // }
+        // ab.setDisplayHomeAsUpEnabled(true);
+        // }
 
         RecyclerView recyclerView = findViewById(R.id.recycler_view);
-        recyclerView.setAdapter(new NewsRecyclerAdapter(this, DataUtils.generateNews(),clickListener));
+        recyclerView.setAdapter(new NewsRecyclerAdapter(this, DataUtils.generateNews(), clickListener));
 
         if (getResources().getConfiguration().orientation == Configuration.ORIENTATION_PORTRAIT) {
             LinearLayoutManager linearLayoutManager = new LinearLayoutManager(this);
@@ -71,4 +66,5 @@ public class NewsListActivity extends AppCompatActivity {
                 return super.onOptionsItemSelected(item);
         }
     }
+
 }
