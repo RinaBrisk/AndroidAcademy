@@ -7,10 +7,11 @@ import android.view.Menu;
 import android.view.MenuItem;
 
 
+import java.io.Serializable;
+
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatActivity;
-import androidx.core.app.NavUtils;
 import androidx.recyclerview.widget.GridLayoutManager;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
@@ -19,22 +20,13 @@ import androidx.recyclerview.widget.RecyclerView;
 public class NewsListActivity extends AppCompatActivity {
 
     private final NewsRecyclerAdapter.OnItemClickListener clickListener = newsItem -> {
-        startActivity(NewsDetailsActivity.createIntent(this, newsItem.getImageUrl(),
-                newsItem.getTitle(),
-                newsItem.getPublishDate().toString(),
-                newsItem.getFullText(),
-                newsItem.getCategory().getName()));
+        startActivity(NewsDetailsActivity.createIntent(this, newsItem));
     };
 
     @Override
     public void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_news_list);
-
-        // ActionBar ab = getSupportActionBar();
-        //if (ab != null) {
-        // ab.setDisplayHomeAsUpEnabled(true);
-        // }
 
         RecyclerView recyclerView = findViewById(R.id.recycler_view);
         recyclerView.setAdapter(new NewsRecyclerAdapter(this, DataUtils.generateNews(), clickListener));
@@ -46,8 +38,7 @@ public class NewsListActivity extends AppCompatActivity {
             GridLayoutManager gridLayoutManager = new GridLayoutManager(this, 2);
             recyclerView.setLayoutManager(gridLayoutManager);
         }
-        DividerNewsItemDecoration dividerItemDecoration = new DividerNewsItemDecoration(recyclerView.getContext());
-        recyclerView.addItemDecoration(dividerItemDecoration);
+        recyclerView.addItemDecoration(new DividerNewsItemDecoration(getResources().getDimensionPixelSize(R.dimen.divider_news_decoration)));
     }
 
     @Override

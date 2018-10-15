@@ -8,6 +8,10 @@ import android.widget.ImageView;
 import android.widget.TextView;
 import com.bumptech.glide.Glide;
 
+import java.io.Serializable;
+import java.text.SimpleDateFormat;
+import java.util.Locale;
+
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.appcompat.app.ActionBar;
@@ -15,24 +19,11 @@ import androidx.appcompat.app.AppCompatActivity;
 
 public class NewsDetailsActivity extends AppCompatActivity {
 
-    private static final String KEY_IMAGE = "KEY_IMAGE";
-    private static final String KEY_TITLE = "KEY_TITLE";
-    private static final String KEY_DATE = "KEY_DATE";
-    private static final String KEY_FULLTEXT = "KEY_FULLTEXT";
-    private static final String KEY_CATEGORY = "KEY_CATEGORY";
+    private static final String KEY_NEWS_ITEM = "KEY_NEWS_ITEM";
 
-    public ImageView imageView;
-    public TextView title;
-    public TextView publishedDate;
-    public TextView fullText;
-
-    static public Intent createIntent(Context context, String imageURL, String title, String publishedDate, String fullText, String category) {
+    static public Intent createIntent(@NonNull Context context, @NonNull NewsItem newsItem) {
         Intent intent = new Intent(context, NewsDetailsActivity.class);
-        intent.putExtra(KEY_IMAGE, imageURL).
-                putExtra(KEY_TITLE, title).
-                putExtra(KEY_DATE, publishedDate).
-                putExtra(KEY_FULLTEXT, fullText).
-                putExtra(KEY_CATEGORY, category);
+        intent.putExtra(KEY_NEWS_ITEM, (Serializable) newsItem);
         return intent;
     }
 
@@ -41,25 +32,21 @@ public class NewsDetailsActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_news_details);
 
-        imageView = findViewById(R.id.heading_image_details);
-        title = findViewById(R.id.tv_title_details);
-        publishedDate = findViewById(R.id.tv_published_data_details);
-        fullText = findViewById(R.id.tv_full_text);
+        final ImageView imageView = findViewById(R.id.heading_image_details);
+        final TextView title = findViewById(R.id.tv_title_details);
+        final TextView publishedDate = findViewById(R.id.tv_published_data_details);
+        final TextView fullText = findViewById(R.id.tv_full_text);
 
-        Intent intent = getIntent();
-        Glide.with(this).load(intent.getStringExtra(KEY_IMAGE)).into(imageView);
-        title.setText(intent.getStringExtra(KEY_TITLE));
+        final NewsItem newsItem = (NewsItem) getIntent().getSerializableExtra(KEY_NEWS_ITEM);
 
-        // в коде ошибка, неизвестно как исправить
-        //SimpleDateFormat simpleDateFormat = new SimpleDateFormat("dd.MM.yyyy HH:mm", Locale.getDefault());
-        //String date = simpleDateFormat.format(intent.getStringExtra(KEY_DATE));
-        //publishedDate.setText(date);
-        publishedDate.setText(intent.getStringExtra(KEY_DATE));
-        fullText.setText(intent.getStringExtra(KEY_FULLTEXT));
+        Glide.with(this).load(newsItem.getImageUrl()).into(imageView);
+        title.setText(newsItem.getTitle());
+        publishedDate.setText(new SimpleDateFormat("dd.MM.yyyy HH:mm", Locale.getDefault()).format(newsItem.getPublishDate()));
+        fullText.setText(newsItem.getFullText());
 
         ActionBar actionBar = getSupportActionBar();
         if (actionBar != null) {
-            actionBar.setTitle(intent.getStringExtra(KEY_CATEGORY));
+            actionBar.setTitle(newsItem.getCategory().getName());
             actionBar.setDisplayHomeAsUpEnabled(true);
         }
     }
