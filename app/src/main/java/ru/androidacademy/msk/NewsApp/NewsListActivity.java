@@ -7,8 +7,6 @@ import android.view.Menu;
 import android.view.MenuItem;
 
 
-import java.io.Serializable;
-
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatActivity;
@@ -20,7 +18,7 @@ import androidx.recyclerview.widget.RecyclerView;
 public class NewsListActivity extends AppCompatActivity {
 
     private final NewsRecyclerAdapter.OnItemClickListener clickListener = newsItem -> {
-        startActivity(NewsDetailsActivity.createIntent(this, newsItem));
+        NewsDetailsActivity.startActivity(this, newsItem);
     };
 
     @Override
@@ -31,13 +29,14 @@ public class NewsListActivity extends AppCompatActivity {
         RecyclerView recyclerView = findViewById(R.id.recycler_view);
         recyclerView.setAdapter(new NewsRecyclerAdapter(this, DataUtils.generateNews(), clickListener));
 
+        RecyclerView.LayoutManager layoutManager;
         if (getResources().getConfiguration().orientation == Configuration.ORIENTATION_PORTRAIT) {
-            LinearLayoutManager linearLayoutManager = new LinearLayoutManager(this);
-            recyclerView.setLayoutManager(linearLayoutManager);
+            layoutManager = new LinearLayoutManager(this);
         } else {
-            GridLayoutManager gridLayoutManager = new GridLayoutManager(this, 2);
-            recyclerView.setLayoutManager(gridLayoutManager);
+            layoutManager = new GridLayoutManager(this, 2);;
         }
+        recyclerView.setLayoutManager(layoutManager);
+
         recyclerView.addItemDecoration(new DividerNewsItemDecoration(getResources().getDimensionPixelSize(R.dimen.divider_news_decoration)));
     }
 

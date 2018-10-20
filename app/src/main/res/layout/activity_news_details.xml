@@ -25,7 +25,8 @@
             android:layout_height="wrap_content"
             android:orientation="vertical"
             android:paddingStart="@dimen/paddingStart_details"
-            android:paddingEnd="@dimen/paddingEnd_details">
+            android:paddingEnd="@dimen/paddingEnd_details"
+            android:paddingBottom="@dimen/paddingBottom_details">
 
             <TextView
                 android:id="@+id/tv_title_details"
@@ -53,8 +54,8 @@
                 android:layout_marginTop="@dimen/marginTop_full_text_details"
                 android:text="@string/full_text"
                 android:textColor="@android:color/black"
-                android:textSize="@dimen/textSize_details_full_text" />
-
+                android:textSize="@dimen/textSize_details_full_text"
+                />
 
         </LinearLayout>
 

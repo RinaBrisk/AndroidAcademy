@@ -22,6 +22,7 @@
     <dimen name="paddingStart_land_about">24dp</dimen>
     <dimen name="paddingStart_details">16dp</dimen>
     <dimen name="paddingEnd_details">16dp</dimen>
+    <dimen name="paddingBottom_details">16dp</dimen>
     <dimen name="paddingBottom_about">8dp</dimen>
     <dimen name="paddingTop_about">8dp</dimen>
     <dimen name="paddingTop_publishedData">8dp</dimen>

@@ -21,10 +21,10 @@ public class NewsDetailsActivity extends AppCompatActivity {
 
     private static final String KEY_NEWS_ITEM = "KEY_NEWS_ITEM";
 
-    static public Intent createIntent(@NonNull Context context, @NonNull NewsItem newsItem) {
+    public static void startActivity(@NonNull Context context, @NonNull NewsItem newsItem) {
         Intent intent = new Intent(context, NewsDetailsActivity.class);
         intent.putExtra(KEY_NEWS_ITEM, (Serializable) newsItem);
-        return intent;
+        context.startActivity(intent);
     }
 
     @Override
