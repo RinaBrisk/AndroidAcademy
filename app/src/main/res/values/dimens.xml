@@ -5,6 +5,7 @@
     <dimen name="card_corner_radius">8dp</dimen>
     <dimen name="card_elevation">4dp</dimen>
     <dimen name="cardview_height_land">280dp</dimen>
+    <dimen name="divider_news_decoration">4dp</dimen>
     <dimen name="heading_image">100dp</dimen>
     <dimen name="heading_details_image">200dp</dimen>
     <dimen name="height_preview_text">80dp</dimen>

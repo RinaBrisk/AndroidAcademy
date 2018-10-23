@@ -3,9 +3,12 @@ package ru.androidacademy.msk.NewsApp;
 import android.content.Intent;
 import android.content.res.Configuration;
 import android.os.Bundle;
+import android.os.Handler;
 import android.view.Menu;
 import android.view.MenuItem;
 
+
+import java.util.List;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
@@ -18,12 +21,13 @@ import androidx.recyclerview.widget.RecyclerView;
 
 public class NewsListActivity extends AppCompatActivity {
 
+    @NonNull
+    private Thread backgroundThread;
+    @NonNull
+    NewsRecyclerAdapter newsRecyclerAdapter;
+
     private final NewsRecyclerAdapter.OnItemClickListener clickListener = newsItem -> {
-        startActivity(NewsDetailsActivity.createIntent(this, newsItem.getImageUrl(),
-                newsItem.getTitle(),
-                newsItem.getPublishDate().toString(),
-                newsItem.getFullText(),
-                newsItem.getCategory().getName()));
+        NewsDetailsActivity.startActivity(this, newsItem);
     };
 
     @Override
@@ -31,23 +35,32 @@ public class NewsListActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_news_list);
 
-        // ActionBar ab = getSupportActionBar();
-        //if (ab != null) {
-        // ab.setDisplayHomeAsUpEnabled(true);
-        // }
-
         RecyclerView recyclerView = findViewById(R.id.recycler_view);
-        recyclerView.setAdapter(new NewsRecyclerAdapter(this, DataUtils.generateNews(), clickListener));
+        newsRecyclerAdapter = new NewsRecyclerAdapter(this, clickListener);
+        recyclerView.setAdapter(newsRecyclerAdapter);
 
+        RecyclerView.LayoutManager layoutManager;
         if (getResources().getConfiguration().orientation == Configuration.ORIENTATION_PORTRAIT) {
-            LinearLayoutManager linearLayoutManager = new LinearLayoutManager(this);
-            recyclerView.setLayoutManager(linearLayoutManager);
+            layoutManager = new LinearLayoutManager(this);
         } else {
-            GridLayoutManager gridLayoutManager = new GridLayoutManager(this, 2);
-            recyclerView.setLayoutManager(gridLayoutManager);
+            layoutManager = new GridLayoutManager(this, 2);;
         }
-        DividerNewsItemDecoration dividerItemDecoration = new DividerNewsItemDecoration(recyclerView.getContext());
-        recyclerView.addItemDecoration(dividerItemDecoration);
+        recyclerView.setLayoutManager(layoutManager);
+
+        recyclerView.addItemDecoration(new DividerNewsItemDecoration(getResources().getDimensionPixelSize(R.dimen.divider_news_decoration)));
+    }
+
+    @Override
+    protected void onStart() {
+        super.onStart();
+        backgroundThread = new Thread(new BackgroundRunnable(new Handler(), newsRecyclerAdapter));
+        backgroundThread.start();
+    }
+
+    @Override
+    protected void onStop() {
+        super.onStop();
+        backgroundThread.interrupt();
     }
 
     @Override
@@ -67,4 +80,8 @@ public class NewsListActivity extends AppCompatActivity {
         }
     }
 
+//    @Override
+//    public void getRecyclerAdapter(NewsRecyclerAdapter newsRecyclerAdapter) {
+//        newsRecyclerAdapter
+//    }
 }

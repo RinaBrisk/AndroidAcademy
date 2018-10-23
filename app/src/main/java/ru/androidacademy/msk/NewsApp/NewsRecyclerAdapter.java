@@ -11,7 +11,10 @@ import com.bumptech.glide.Glide;
 import com.bumptech.glide.RequestManager;
 import com.bumptech.glide.request.RequestOptions;
 
+import java.text.SimpleDateFormat;
+import java.util.ArrayList;
 import java.util.List;
+import java.util.Locale;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
@@ -20,7 +23,7 @@ import androidx.recyclerview.widget.RecyclerView;
 public class NewsRecyclerAdapter extends RecyclerView.Adapter<NewsRecyclerAdapter.ViewHolder> {
 
     @NonNull
-    private final List<NewsItem> news;
+    private final List<NewsItem> news = new ArrayList<>();
     @NonNull
     private final LayoutInflater inflater;
     @NonNull
@@ -28,8 +31,8 @@ public class NewsRecyclerAdapter extends RecyclerView.Adapter<NewsRecyclerAdapte
     @NonNull
     private final RequestManager imageLoader;
 
-    NewsRecyclerAdapter(@NonNull Context context, @NonNull List<NewsItem> news, @NonNull OnItemClickListener onItemClickListener) {
-        this.news = news;
+    NewsRecyclerAdapter(@NonNull Context context, @NonNull OnItemClickListener onItemClickListener) {
+
         inflater = LayoutInflater.from(context);
         this.clickListener = onItemClickListener;
 
@@ -54,6 +57,12 @@ public class NewsRecyclerAdapter extends RecyclerView.Adapter<NewsRecyclerAdapte
         return news.size();
     }
 
+
+    public void replaceItems(@NonNull List<NewsItem> newsItems) {
+        news.clear();
+        news.addAll(newsItems);
+        notifyDataSetChanged();
+    }
 
     public interface OnItemClickListener {
         void onItemClick(NewsItem newsItem);
@@ -90,7 +99,7 @@ public class NewsRecyclerAdapter extends RecyclerView.Adapter<NewsRecyclerAdapte
             category.setText(newsItem.getCategory().getName());
             title.setText(newsItem.getTitle());
             previewText.setText(newsItem.getPreviewText());
-            publishedData.setText(newsItem.getPublishDate().toString());
+            publishedData.setText(new SimpleDateFormat("dd.MM.yyyy HH:mm", Locale.getDefault()).format(newsItem.getPublishDate()));
         }
     }
 }

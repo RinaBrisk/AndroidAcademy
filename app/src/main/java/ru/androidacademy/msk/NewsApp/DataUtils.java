@@ -1,11 +1,12 @@
 package ru.androidacademy.msk.NewsApp;
 
+import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.GregorianCalendar;
 import java.util.List;
 
-public class DataUtils {
+public class DataUtils implements Serializable {
 
   public static List<ru.androidacademy.msk.NewsApp.NewsItem> generateNews() {
     final Category darwinAwards = new Category(1, "Darwin Awards");
