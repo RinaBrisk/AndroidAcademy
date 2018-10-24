@@ -9,6 +9,7 @@ import java.util.List;
 public class DataUtils implements Serializable {
 
   public static List<ru.androidacademy.msk.NewsApp.NewsItem> generateNews() {
+
     final Category darwinAwards = new Category(1, "Darwin Awards");
     final Category criminal = new Category(2, "Criminal");
     final Category animals = new Category(3, "Animals");

@@ -6,25 +6,26 @@ import android.os.Bundle;
 import android.os.Handler;
 import android.view.Menu;
 import android.view.MenuItem;
-
-
-import java.util.List;
+import android.widget.ProgressBar;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatActivity;
-import androidx.core.app.NavUtils;
 import androidx.recyclerview.widget.GridLayoutManager;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
 
-public class NewsListActivity extends AppCompatActivity {
+public class NewsListActivity extends AppCompatActivity implements LoadingData {
 
     @NonNull
     private Thread backgroundThread;
     @NonNull
     NewsRecyclerAdapter newsRecyclerAdapter;
+    @NonNull
+    ProgressBar progressBar;
+    @NonNull
+    RecyclerView recyclerView;
 
     private final NewsRecyclerAdapter.OnItemClickListener clickListener = newsItem -> {
         NewsDetailsActivity.startActivity(this, newsItem);
@@ -35,7 +36,7 @@ public class NewsListActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_news_list);
 
-        RecyclerView recyclerView = findViewById(R.id.recycler_view);
+        recyclerView = findViewById(R.id.recycler_view);
         newsRecyclerAdapter = new NewsRecyclerAdapter(this, clickListener);
         recyclerView.setAdapter(newsRecyclerAdapter);
 
@@ -48,12 +49,14 @@ public class NewsListActivity extends AppCompatActivity {
         recyclerView.setLayoutManager(layoutManager);
 
         recyclerView.addItemDecoration(new DividerNewsItemDecoration(getResources().getDimensionPixelSize(R.dimen.divider_news_decoration)));
+
+        progressBar = findViewById(R.id.progress_bar);
     }
 
     @Override
     protected void onStart() {
         super.onStart();
-        backgroundThread = new Thread(new BackgroundRunnable(new Handler(), newsRecyclerAdapter));
+        backgroundThread = new Thread(new BackgroundRunnable(new Handler(), newsRecyclerAdapter, this));
         backgroundThread.start();
     }
 
@@ -80,8 +83,10 @@ public class NewsListActivity extends AppCompatActivity {
         }
     }
 
-//    @Override
-//    public void getRecyclerAdapter(NewsRecyclerAdapter newsRecyclerAdapter) {
-//        newsRecyclerAdapter
-//    }
+    @Override
+    public void showProgress(boolean shouldShow) {
+
+        Utils.setVisible(progressBar, shouldShow);
+        Utils.setVisible(recyclerView, !shouldShow);
+    }
 }
