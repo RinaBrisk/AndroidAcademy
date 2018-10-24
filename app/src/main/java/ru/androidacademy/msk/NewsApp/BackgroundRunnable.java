@@ -26,7 +26,7 @@ public class BackgroundRunnable implements Runnable {
     @Override
     public void run() {
 
-        Utils.imitateLoading(5000);
+        Utils.imitateLoading(2000);
 
         if (Thread.interrupted()) return;
         Handler handler = handlerRef.get();

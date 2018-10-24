@@ -21,7 +21,7 @@ public class Utils {
             Thread.sleep(howLongToWait);
         } catch (InterruptedException e) {
             if(BuildConfig.DEBUG){
-                Log.e("Utils", e.getMessage());
+                Log.e("Utils", e.getMessage(), e);
             }
         }
     }
