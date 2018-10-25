@@ -31,4 +31,3 @@ public class DividerNewsItemDecoration extends RecyclerView.ItemDecoration {
         }
     }
 }
-
