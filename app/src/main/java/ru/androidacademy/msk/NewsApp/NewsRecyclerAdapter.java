@@ -23,7 +23,7 @@ import androidx.recyclerview.widget.RecyclerView;
 public class NewsRecyclerAdapter extends RecyclerView.Adapter<NewsRecyclerAdapter.ViewHolder> {
 
     @NonNull
-    private final List<NewsItem> news;
+    private final List<NewsItem> news = new ArrayList<>();
     @NonNull
     private final LayoutInflater inflater;
     @NonNull
@@ -31,8 +31,8 @@ public class NewsRecyclerAdapter extends RecyclerView.Adapter<NewsRecyclerAdapte
     @NonNull
     private final RequestManager imageLoader;
 
-    NewsRecyclerAdapter(@NonNull Context context, @NonNull List<NewsItem> newsItemList, @NonNull OnItemClickListener onItemClickListener) {
-        this.news = newsItemList;
+    NewsRecyclerAdapter(@NonNull Context context, @NonNull OnItemClickListener onItemClickListener) {
+
         inflater = LayoutInflater.from(context);
         this.clickListener = onItemClickListener;
 

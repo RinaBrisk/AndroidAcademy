@@ -17,6 +17,11 @@ import androidx.recyclerview.widget.RecyclerView;
 
 public class NewsListActivity extends AppCompatActivity {
 
+    @NonNull
+    RecyclerView recyclerView;
+    @NonNull
+    NewsRecyclerAdapter newsRecyclerAdapter;
+
     private final NewsRecyclerAdapter.OnItemClickListener clickListener = newsItem -> {
         NewsDetailsActivity.startActivity(this, newsItem);
     };
@@ -26,8 +31,9 @@ public class NewsListActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_news_list);
 
-        RecyclerView recyclerView = findViewById(R.id.recycler_view);
-        recyclerView.setAdapter(new NewsRecyclerAdapter(this, DataUtils.generateNews(), clickListener));
+        recyclerView = findViewById(R.id.recycler_view);
+        newsRecyclerAdapter = new NewsRecyclerAdapter(this, clickListener);
+        recyclerView.setAdapter(newsRecyclerAdapter);
 
         RecyclerView.LayoutManager layoutManager;
         if (getResources().getConfiguration().orientation == Configuration.ORIENTATION_PORTRAIT) {

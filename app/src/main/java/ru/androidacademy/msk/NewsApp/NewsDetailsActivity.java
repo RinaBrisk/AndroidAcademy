@@ -8,7 +8,6 @@ import android.widget.ImageView;
 import android.widget.TextView;
 import com.bumptech.glide.Glide;
 
-import java.io.Serializable;
 import java.text.SimpleDateFormat;
 import java.util.Locale;
 
@@ -23,7 +22,7 @@ public class NewsDetailsActivity extends AppCompatActivity {
 
     public static void startActivity(@NonNull Context context, @NonNull NewsItem newsItem) {
         Intent intent = new Intent(context, NewsDetailsActivity.class);
-        intent.putExtra(KEY_NEWS_ITEM, (Serializable) newsItem);
+        intent.putExtra(KEY_NEWS_ITEM, newsItem);
         context.startActivity(intent);
     }
 
