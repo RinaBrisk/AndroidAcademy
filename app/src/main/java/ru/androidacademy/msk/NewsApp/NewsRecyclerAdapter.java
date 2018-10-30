@@ -58,6 +58,12 @@ public class NewsRecyclerAdapter extends RecyclerView.Adapter<NewsRecyclerAdapte
     }
 
 
+    public void replaceItems(@NonNull List<NewsItem> newsItems) {
+        news.clear();
+        news.addAll(newsItems);
+        notifyDataSetChanged();
+    }
+
     public interface OnItemClickListener {
         void onItemClick(@NonNull NewsItem newsItem);
     }

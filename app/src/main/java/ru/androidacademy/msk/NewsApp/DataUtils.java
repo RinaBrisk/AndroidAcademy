@@ -1,13 +1,15 @@
 package ru.androidacademy.msk.NewsApp;
 
+import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.GregorianCalendar;
 import java.util.List;
 
-public class DataUtils {
+public class DataUtils{
 
   public static List<ru.androidacademy.msk.NewsApp.NewsItem> generateNews() {
+
     final Category darwinAwards = new Category(1, "Darwin Awards");
     final Category criminal = new Category(2, "Criminal");
     final Category animals = new Category(3, "Animals");
@@ -16,7 +18,7 @@ public class DataUtils {
     List<ru.androidacademy.msk.NewsApp.NewsItem> news = new ArrayList<>();
     news.add(new ru.androidacademy.msk.NewsApp.NewsItem(
         "Tourist filmed sitting on 5m-long crocodile",
-        "https://e3.365dm.com/18/09/736x414/skynews-crocodile-australia_4433218.jpg",
+        "http://e3.365dm.com/18/09/736x414/skynews-crocodile-australia_4433218.jpg",
         darwinAwards,
         createDate(2018, 9, 26, 10, 34),
         "\"It was dangerous, I know. It is a scary feeling sitting on something that could kill you in a fraction of a " 
@@ -35,7 +37,7 @@ public class DataUtils {
     ));
     news.add(new ru.androidacademy.msk.NewsApp.NewsItem(
         "Police warn daredevil cliff jumpers who are 'risking their lives for likes'",
-        "https://e3.365dm.com/18/09/2048x1152/skynews-cliff-jumping-greg-milam_4433647.jpg",
+        "http://e3.365dm.com/18/09/2048x1152/skynews-cliff-jumping-greg-milam_4433647.jpg",
         criminal,
         createDate(2018, 9, 25, 12, 45),
         "Police in Los Angeles say they are spending hundreds of thousands of dollars airlifting cliff jumpers out of " 
@@ -53,7 +55,7 @@ public class DataUtils {
     ));
     news.add(new ru.androidacademy.msk.NewsApp.NewsItem(
         "Bear saved after getting his head stuck in milk can",
-        "https://e3.365dm.com/18/09/2048x1152/skynews-bear-minnesota_4419111.jpg",
+        "http://e3.365dm.com/18/09/2048x1152/skynews-bear-minnesota_4419111.jpg",
         animals,
         createDate(2018, 9, 20, 14, 4),
         "Firefighters used the Jaws of Life to free the young black bear, a tool which is normally used to extricate car" 
@@ -70,7 +72,7 @@ public class DataUtils {
     ));
     news.add(new ru.androidacademy.msk.NewsApp.NewsItem(
         "Nearly $18m of cocaine seized in donated boxes of bananas",
-        "https://e3.365dm.com/18/09/2048x1152/skynews-texas-bananas-drugs_4430760.jpg",
+        "http://e3.365dm.com/18/09/2048x1152/skynews-texas-bananas-drugs_4430760.jpg",
         criminal,
         createDate(2018, 9, 18, 4, 4),
         "Massive quantities of the drug were found in boxes of fruit that had been donated to the Texas Department of " 
@@ -90,7 +92,7 @@ public class DataUtils {
     ));
     news.add(new ru.androidacademy.msk.NewsApp.NewsItem(
         "US government hacker jailed after losing secrets",
-        "https://e3.365dm.com/17/09/736x414/d55722dc4eb37f6959d2e047c14710d586aab99f90aa1e4acfd9f992125294f5_4107038.jpg",
+        "http://e3.365dm.com/17/09/736x414/d55722dc4eb37f6959d2e047c14710d586aab99f90aa1e4acfd9f992125294f5_4107038.jpg",
         criminal,
         createDate(2018, 9, 17, 12, 45),
         "Nghia Hoang Pho, 68, who developed hacking tools for the National Security Agency, illegally stored material " 
@@ -114,7 +116,7 @@ public class DataUtils {
     ));
     news.add(new ru.androidacademy.msk.NewsApp.NewsItem(
         "Wet Wet Wet announce Liberty X star Kevin Simm as new frontman",
-        "https://e3.365dm.com/18/09/2048x1152/skynews-wet-wet-wet-kevin-simm_4433314.jpg",
+        "http://e3.365dm.com/18/09/2048x1152/skynews-wet-wet-wet-kevin-simm_4433314.jpg",
         music,
         createDate(2018, 9, 17, 12, 45),
         "The Voice 2016 winner says he was \"really taken aback\" by the opportunity after singing the band's songs " 

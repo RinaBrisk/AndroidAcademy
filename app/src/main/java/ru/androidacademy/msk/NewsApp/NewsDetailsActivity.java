@@ -60,5 +60,4 @@ public class NewsDetailsActivity extends AppCompatActivity {
                 return super.onOptionsItemSelected(item);
         }
     }
-
 }
