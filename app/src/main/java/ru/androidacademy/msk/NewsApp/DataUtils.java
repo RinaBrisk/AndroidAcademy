@@ -6,7 +6,7 @@ import java.util.Date;
 import java.util.GregorianCalendar;
 import java.util.List;
 
-public class DataUtils implements Serializable {
+public class DataUtils{
 
   public static List<ru.androidacademy.msk.NewsApp.NewsItem> generateNews() {
 

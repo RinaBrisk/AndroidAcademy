@@ -63,7 +63,10 @@ public class NewsListActivity extends AppCompatActivity implements LoadingData {
     @Override
     protected void onStop() {
         super.onStop();
-        backgroundThread.interrupt();
+        if(backgroundThread != null){
+            backgroundThread.interrupt();
+        }
+        backgroundThread = null;
     }
 
     @Override
