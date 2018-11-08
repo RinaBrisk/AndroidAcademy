@@ -1,4 +1,4 @@
-package ru.androidacademy.msk.NewsApp;
+package ru.androidacademy.msk.NewsApp.ui;
 
 import android.app.Activity;
 import android.content.Intent;
@@ -13,6 +13,7 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import androidx.appcompat.app.AppCompatActivity;
+import ru.androidacademy.msk.NewsApp.R;
 
 public class AboutActivity extends AppCompatActivity {
 

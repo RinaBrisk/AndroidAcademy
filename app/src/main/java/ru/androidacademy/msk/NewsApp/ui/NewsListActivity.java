@@ -1,4 +1,4 @@
-package ru.androidacademy.msk.NewsApp;
+package ru.androidacademy.msk.NewsApp.ui;
 
 import android.content.Intent;
 import android.content.res.Configuration;
@@ -8,12 +8,27 @@ import android.view.Menu;
 import android.view.MenuItem;
 import android.widget.ProgressBar;
 
+import java.util.List;
+
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.recyclerview.widget.GridLayoutManager;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
+import retrofit2.Call;
+import retrofit2.Callback;
+import retrofit2.Response;
+import ru.androidacademy.msk.NewsApp.DividerNewsItemDecoration;
+import ru.androidacademy.msk.NewsApp.ui.adapter.NewsRecyclerAdapter;
+import ru.androidacademy.msk.NewsApp.R;
+import ru.androidacademy.msk.NewsApp.State;
+import ru.androidacademy.msk.NewsApp.background.BackgroundRunnable;
+import ru.androidacademy.msk.NewsApp.background.Utils;
+import ru.androidacademy.msk.NewsApp.network.LoadingData;
+import ru.androidacademy.msk.NewsApp.network.DefaultResponse;
+import ru.androidacademy.msk.NewsApp.network.RestApi;
+import ru.androidacademy.msk.NewsApp.network.UserDTO;
 
 
 public class NewsListActivity extends AppCompatActivity implements LoadingData {
@@ -26,6 +41,9 @@ public class NewsListActivity extends AppCompatActivity implements LoadingData {
     ProgressBar progressBar;
     @NonNull
     RecyclerView recyclerView;
+
+    @Nullable
+    public Call<DefaultResponse<List<UserDTO>>> searchRequest;
 
     private final NewsRecyclerAdapter.OnItemClickListener clickListener = newsItem -> {
         NewsDetailsActivity.startActivity(this, newsItem);
@@ -47,24 +65,20 @@ public class NewsListActivity extends AppCompatActivity implements LoadingData {
             layoutManager = new GridLayoutManager(this, 2);;
         }
         recyclerView.setLayoutManager(layoutManager);
-
-        recyclerView.addItemDecoration(new DividerNewsItemDecoration(getResources().getDimensionPixelSize(R.dimen.divider_news_decoration)));
-        recyclerView.setLayoutManager(layoutManager);
-
         recyclerView.addItemDecoration(new DividerNewsItemDecoration(getResources().getDimensionPixelSize(R.dimen.divider_news_decoration)));
 
         progressBar = findViewById(R.id.progress_bar);
     }
 
     @Override
-    protected void onStart() {
+    public void onStart() {
         super.onStart();
         backgroundThread = new Thread(new BackgroundRunnable(new Handler(), newsRecyclerAdapter, this));
         backgroundThread.start();
     }
 
     @Override
-    protected void onStop() {
+    public void onStop() {
         super.onStop();
         if(backgroundThread != null){
             backgroundThread.interrupt();
@@ -94,5 +108,54 @@ public class NewsListActivity extends AppCompatActivity implements LoadingData {
 
         Utils.setVisible(progressBar, shouldShow);
         Utils.setVisible(recyclerView, !shouldShow);
+    }
+
+    private void loadNews(@NonNull String search){
+
+        searchRequest = RestApi.getInstance()
+                .news()
+                .search(search);
+
+        searchRequest.enqueue(new Callback<DefaultResponse<List<UserDTO>>>() {
+            @Override
+            public void onResponse(@NonNull Call<DefaultResponse<List<UserDTO>>> call,
+                                   @NonNull Response<DefaultResponse<List<UserDTO>>> response) {
+                checkResponseAndSetState(response);
+            }
+
+            @Override
+            public void onFailure(@NonNull Call<DefaultResponse<List<UserDTO>>> call,
+                                  @NonNull Throwable t) {
+
+            }
+        });
+    }
+
+    private void checkResponseAndSetState(Response response){
+
+        if(!response.isSuccessful()){
+
+        }
+    }
+
+    public void showState(State state){
+
+        switch (state){
+            case HasData:{
+
+            }
+            case HasNoData:{
+
+            }
+            case Loading:{
+
+            }
+            case ServerError:{
+
+            }
+            case NetworkError:{
+
+            }
+        }
     }
 }

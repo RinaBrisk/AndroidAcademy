@@ -1,9 +1,10 @@
-package ru.androidacademy.msk.NewsApp;
+package ru.androidacademy.msk.NewsApp.background;
 
 import android.util.Log;
 import android.view.View;
 
 import androidx.annotation.Nullable;
+import ru.androidacademy.msk.NewsApp.BuildConfig;
 
 public class Utils {
 

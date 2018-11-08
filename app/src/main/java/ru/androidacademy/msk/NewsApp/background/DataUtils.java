@@ -1,6 +1,5 @@
-package ru.androidacademy.msk.NewsApp;
+package ru.androidacademy.msk.NewsApp.background;
 
-import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.GregorianCalendar;
@@ -8,15 +7,15 @@ import java.util.List;
 
 public class DataUtils{
 
-  public static List<ru.androidacademy.msk.NewsApp.NewsItem> generateNews() {
+  public static List<NewsItem> generateNews() {
 
     final Category darwinAwards = new Category(1, "Darwin Awards");
     final Category criminal = new Category(2, "Criminal");
     final Category animals = new Category(3, "Animals");
     final Category music = new Category(4, "Music");
 
-    List<ru.androidacademy.msk.NewsApp.NewsItem> news = new ArrayList<>();
-    news.add(new ru.androidacademy.msk.NewsApp.NewsItem(
+    List<NewsItem> news = new ArrayList<>();
+    news.add(new NewsItem(
         "Tourist filmed sitting on 5m-long crocodile",
         "http://e3.365dm.com/18/09/736x414/skynews-crocodile-australia_4433218.jpg",
         darwinAwards,
@@ -35,7 +34,7 @@ public class DataUtils{
             + " time, sat down again, turned towards the camera, smiled and put this thumb in the air.\n\n"
             + "Mr Jensen admitted he took life in his hands by sitting on a live crocodile for the first time."
     ));
-    news.add(new ru.androidacademy.msk.NewsApp.NewsItem(
+    news.add(new NewsItem(
         "Police warn daredevil cliff jumpers who are 'risking their lives for likes'",
         "http://e3.365dm.com/18/09/2048x1152/skynews-cliff-jumping-greg-milam_4433647.jpg",
         criminal,
@@ -53,7 +52,7 @@ public class DataUtils{
             + "dozens of risky selfie videos. Two men were recently rescued after being injured while being filmed at " 
             + "Hermit Falls."
     ));
-    news.add(new ru.androidacademy.msk.NewsApp.NewsItem(
+    news.add(new NewsItem(
         "Bear saved after getting his head stuck in milk can",
         "http://e3.365dm.com/18/09/2048x1152/skynews-bear-minnesota_4419111.jpg",
         animals,
@@ -70,7 +69,7 @@ public class DataUtils{
             + "accident victims - and a spreader to pry the can off.\n\n"
             + "After being released, the seemingly healthy bear ran off into the woods."
     ));
-    news.add(new ru.androidacademy.msk.NewsApp.NewsItem(
+    news.add(new NewsItem(
         "Nearly $18m of cocaine seized in donated boxes of bananas",
         "http://e3.365dm.com/18/09/2048x1152/skynews-texas-bananas-drugs_4430760.jpg",
         criminal,
@@ -90,7 +89,7 @@ public class DataUtils{
             + "\"They immediately notified port authorities and awaited their instruction.\""
             + "US Customs arrived and tested the substance, which confirmed the powder was cocaine."
     ));
-    news.add(new ru.androidacademy.msk.NewsApp.NewsItem(
+    news.add(new NewsItem(
         "US government hacker jailed after losing secrets",
         "http://e3.365dm.com/17/09/736x414/d55722dc4eb37f6959d2e047c14710d586aab99f90aa1e4acfd9f992125294f5_4107038.jpg",
         criminal,
@@ -114,7 +113,7 @@ public class DataUtils{
             + " that an NSA employee had actually been hacked when he downloaded pirate software and disabled "
             + "Kaspersky's anti-virus."
     ));
-    news.add(new ru.androidacademy.msk.NewsApp.NewsItem(
+    news.add(new NewsItem(
         "Wet Wet Wet announce Liberty X star Kevin Simm as new frontman",
         "http://e3.365dm.com/18/09/2048x1152/skynews-wet-wet-wet-kevin-simm_4433314.jpg",
         music,

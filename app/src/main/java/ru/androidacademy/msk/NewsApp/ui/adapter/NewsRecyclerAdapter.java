@@ -1,4 +1,4 @@
-package ru.androidacademy.msk.NewsApp;
+package ru.androidacademy.msk.NewsApp.ui.adapter;
 
 import android.content.Context;
 import android.view.LayoutInflater;
@@ -19,6 +19,8 @@ import java.util.Locale;
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.recyclerview.widget.RecyclerView;
+import ru.androidacademy.msk.NewsApp.background.NewsItem;
+import ru.androidacademy.msk.NewsApp.R;
 
 public class NewsRecyclerAdapter extends RecyclerView.Adapter<NewsRecyclerAdapter.ViewHolder> {
 
@@ -31,7 +33,7 @@ public class NewsRecyclerAdapter extends RecyclerView.Adapter<NewsRecyclerAdapte
     @NonNull
     private final RequestManager imageLoader;
 
-    NewsRecyclerAdapter(@NonNull Context context, @NonNull OnItemClickListener onItemClickListener) {
+    public NewsRecyclerAdapter(@NonNull Context context, @NonNull OnItemClickListener onItemClickListener) {
 
         inflater = LayoutInflater.from(context);
         this.clickListener = onItemClickListener;

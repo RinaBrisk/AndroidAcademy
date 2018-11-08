@@ -1,10 +1,11 @@
-package ru.androidacademy.msk.NewsApp;
+package ru.androidacademy.msk.NewsApp.background;
 
 import java.lang.ref.WeakReference;
-import java.security.acl.LastOwnerException;
 import java.util.List;
 
 import androidx.annotation.NonNull;
+import ru.androidacademy.msk.NewsApp.ui.adapter.NewsRecyclerAdapter;
+import ru.androidacademy.msk.NewsApp.network.LoadingData;
 
 public class UIRunnable implements Runnable {
 

@@ -1,4 +1,4 @@
-package ru.androidacademy.msk.NewsApp;
+package ru.androidacademy.msk.NewsApp.background;
 
 import java.io.Serializable;
 

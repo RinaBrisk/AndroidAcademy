@@ -1,4 +1,4 @@
-package ru.androidacademy.msk.NewsApp;
+package ru.androidacademy.msk.NewsApp.background;
 
 import android.os.Handler;
 
@@ -6,6 +6,8 @@ import java.lang.ref.WeakReference;
 import java.util.List;
 
 import androidx.annotation.NonNull;
+import ru.androidacademy.msk.NewsApp.ui.adapter.NewsRecyclerAdapter;
+import ru.androidacademy.msk.NewsApp.network.LoadingData;
 
 public class BackgroundRunnable implements Runnable {
 

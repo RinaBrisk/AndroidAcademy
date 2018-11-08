@@ -1,4 +1,4 @@
-package ru.androidacademy.msk.NewsApp;
+package ru.androidacademy.msk.NewsApp.ui;
 
 import android.content.Context;
 import android.content.Intent;
@@ -15,6 +15,8 @@ import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.appcompat.app.ActionBar;
 import androidx.appcompat.app.AppCompatActivity;
+import ru.androidacademy.msk.NewsApp.background.NewsItem;
+import ru.androidacademy.msk.NewsApp.R;
 
 public class NewsDetailsActivity extends AppCompatActivity {
 
