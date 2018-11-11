@@ -1,4 +1,4 @@
-package ru.androidacademy.msk.NewsApp.network;
+package ru.androidacademy.msk.NewsApp.background;
 
 public interface LoadingData {
 

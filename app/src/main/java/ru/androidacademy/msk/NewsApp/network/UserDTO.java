@@ -19,7 +19,7 @@ public class UserDTO {
     @SerializedName("published_date")
     private String publishedDate;
     @SerializedName("multimedia")
-    private List<Object> multimedia = null;
+    private NewsList<Object> multimedia = null;
 
     @SerializedName("section")
     public String getSection() {
@@ -52,7 +52,7 @@ public class UserDTO {
     }
 
     @SerializedName("multimedia")
-    public List<Object> getMultimedia() {
+    public NewsList<Object> getMultimedia() {
         return multimedia;
     }
 

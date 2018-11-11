@@ -10,5 +10,5 @@ import retrofit2.http.Url;
 public interface NewsEndpoint {
     @NonNull
     @GET("gifs/search")
-    Call<DefaultResponse<List<UserDTO>>> search(@Url String url);
+    Call<DefaultResponse<NewsList<UserDTO>>> search(@Url String url);
 }

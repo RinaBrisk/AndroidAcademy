@@ -3,12 +3,10 @@ package ru.androidacademy.msk.NewsApp.ui;
 import android.content.Intent;
 import android.content.res.Configuration;
 import android.os.Bundle;
-import android.os.Handler;
 import android.view.Menu;
 import android.view.MenuItem;
-import android.widget.ProgressBar;
 
-import java.util.List;
+import java.io.IOException;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
@@ -20,30 +18,29 @@ import retrofit2.Call;
 import retrofit2.Callback;
 import retrofit2.Response;
 import ru.androidacademy.msk.NewsApp.DividerNewsItemDecoration;
+import ru.androidacademy.msk.NewsApp.network.NewsList;
 import ru.androidacademy.msk.NewsApp.ui.adapter.NewsRecyclerAdapter;
 import ru.androidacademy.msk.NewsApp.R;
 import ru.androidacademy.msk.NewsApp.State;
-import ru.androidacademy.msk.NewsApp.background.BackgroundRunnable;
-import ru.androidacademy.msk.NewsApp.background.Utils;
-import ru.androidacademy.msk.NewsApp.network.LoadingData;
 import ru.androidacademy.msk.NewsApp.network.DefaultResponse;
 import ru.androidacademy.msk.NewsApp.network.RestApi;
 import ru.androidacademy.msk.NewsApp.network.UserDTO;
 
 
-public class NewsListActivity extends AppCompatActivity implements LoadingData {
+public class NewsListActivity extends AppCompatActivity {
+
+    //@NonNull
+    //private Thread backgroundThread;
+    //@NonNull
+    //ProgressBar progressBar;
 
     @NonNull
-    private Thread backgroundThread;
-    @NonNull
     NewsRecyclerAdapter newsRecyclerAdapter;
-    @NonNull
-    ProgressBar progressBar;
     @NonNull
     RecyclerView recyclerView;
 
     @Nullable
-    public Call<DefaultResponse<List<UserDTO>>> searchRequest;
+    public Call<DefaultResponse<NewsList<UserDTO>>> searchRequest;
 
     private final NewsRecyclerAdapter.OnItemClickListener clickListener = newsItem -> {
         NewsDetailsActivity.startActivity(this, newsItem);
@@ -67,23 +64,23 @@ public class NewsListActivity extends AppCompatActivity implements LoadingData {
         recyclerView.setLayoutManager(layoutManager);
         recyclerView.addItemDecoration(new DividerNewsItemDecoration(getResources().getDimensionPixelSize(R.dimen.divider_news_decoration)));
 
-        progressBar = findViewById(R.id.progress_bar);
+        //progressBar = findViewById(R.id.progress_bar);
     }
 
     @Override
     public void onStart() {
         super.onStart();
-        backgroundThread = new Thread(new BackgroundRunnable(new Handler(), newsRecyclerAdapter, this));
-        backgroundThread.start();
+        //backgroundThread = new Thread(new BackgroundRunnable(new Handler(), newsRecyclerAdapter, this));
+        //backgroundThread.start();
     }
 
     @Override
     public void onStop() {
         super.onStop();
-        if(backgroundThread != null){
-            backgroundThread.interrupt();
-        }
-        backgroundThread = null;
+        //if(backgroundThread != null){
+        //    backgroundThread.interrupt();
+        //}
+        //backgroundThread = null;
     }
 
     @Override
@@ -103,51 +100,72 @@ public class NewsListActivity extends AppCompatActivity implements LoadingData {
         }
     }
 
-    @Override
-    public void showProgress(boolean shouldShow) {
+    //@Override
+    //public void showProgress(boolean shouldShow) {
 
-        Utils.setVisible(progressBar, shouldShow);
-        Utils.setVisible(recyclerView, !shouldShow);
-    }
+    //    Utils.setVisible(progressBar, shouldShow);
+    //    Utils.setVisible(recyclerView, !shouldShow);
+    //}
 
-    private void loadNews(@NonNull String search){
+    private void loadNews(@NonNull String search) {
 
         searchRequest = RestApi.getInstance()
                 .news()
                 .search(search);
 
-        searchRequest.enqueue(new Callback<DefaultResponse<List<UserDTO>>>() {
+        searchRequest.enqueue(new Callback<DefaultResponse<NewsList<UserDTO>>>() {
             @Override
-            public void onResponse(@NonNull Call<DefaultResponse<List<UserDTO>>> call,
-                                   @NonNull Response<DefaultResponse<List<UserDTO>>> response) {
+            public void onResponse(@NonNull Call<DefaultResponse<NewsList<UserDTO>>> call,
+                                   @NonNull Response<DefaultResponse<NewsList<UserDTO>>> response) {
                 checkResponseAndSetState(response);
             }
 
             @Override
-            public void onFailure(@NonNull Call<DefaultResponse<List<UserDTO>>> call,
+            public void onFailure(@NonNull Call<DefaultResponse<NewsList<UserDTO>>> call,
                                   @NonNull Throwable t) {
-
+                handleError(t);
             }
         });
     }
 
-    private void checkResponseAndSetState(Response response){
+    private void checkResponseAndSetState(@NonNull Response<DefaultResponse<NewsList<UserDTO>>> response){
 
-        if(!response.isSuccessful()){
-
+        if (!response.isSuccessful()) {
+            showState(State.ServerError);
+            return;
         }
+
+        assert response.body() != null;
+        UserDTO userDTO =  response.body().getData().getData();
+
+        if(userDTO.getSubsection() == null){
+            showState(State.HasNoSubsection);
+            return;
+        }
+        if(userDTO.getSubsection().isEmpty()){
+            showState(State.HasNoSubsection);
+            return;
+        }
+        if(userDTO.getMultimedia() == null) {
+            showState(State.HasNoMultimedia);
+        }
+    }
+
+    private void handleError(Throwable throwable) {
+        if (throwable instanceof IOException) {
+            showState(State.NetworkError);
+            return;
+        }
+        showState(State.ServerError);
     }
 
     public void showState(State state){
 
         switch (state){
-            case HasData:{
+            case HasNoSubsection:{
 
             }
-            case HasNoData:{
-
-            }
-            case Loading:{
+            case HasNoMultimedia:{
 
             }
             case ServerError:{
@@ -158,4 +176,5 @@ public class NewsListActivity extends AppCompatActivity implements LoadingData {
             }
         }
     }
+
 }
