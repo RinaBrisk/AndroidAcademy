@@ -15,14 +15,14 @@ import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.appcompat.app.ActionBar;
 import androidx.appcompat.app.AppCompatActivity;
-import ru.androidacademy.msk.NewsApp.background.NewsItem;
+import ru.androidacademy.msk.NewsApp.background.NewsDTO;
 import ru.androidacademy.msk.NewsApp.R;
 
 public class NewsDetailsActivity extends AppCompatActivity {
 
     private static final String KEY_NEWS_ITEM = "KEY_NEWS_ITEM";
 
-    public static void startActivity(@NonNull Context context, @NonNull NewsItem newsItem) {
+    public static void startActivity(@NonNull Context context, @NonNull NewsDTO newsItem) {
         Intent intent = new Intent(context, NewsDetailsActivity.class);
         intent.putExtra(KEY_NEWS_ITEM, newsItem);
         context.startActivity(intent);
@@ -38,7 +38,7 @@ public class NewsDetailsActivity extends AppCompatActivity {
         final TextView publishedDate = findViewById(R.id.tv_published_data_details);
         final TextView fullText = findViewById(R.id.tv_full_text);
 
-        final NewsItem newsItem = (NewsItem) getIntent().getSerializableExtra(KEY_NEWS_ITEM);
+        final NewsDTO newsItem = (NewsDTO) getIntent().getSerializableExtra(KEY_NEWS_ITEM);
 
         Glide.with(this).load(newsItem.getImageUrl()).into(imageView);
         title.setText(newsItem.getTitle());

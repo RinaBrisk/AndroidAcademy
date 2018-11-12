@@ -21,6 +21,8 @@ public final class RestApi { // наследование не желательн
 
         final OkHttpClient httpClient = buildOkHttpClient();
         final Retrofit retrofitClient = buildRetrofitClient(httpClient);
+
+        newsEndpoint = retrofitClient.create(NewsEndpoint.class);  //объяснили retrofit какой интерфейс реализовывать
     }
 
     public static synchronized RestApi getInstance(){ // без synchronized только для однопоточных программ
@@ -56,7 +58,7 @@ public final class RestApi { // наследование не желательн
     }
 
     @NonNull
-    public NewsEndpoint news(){
+    public NewsEndpoint getNewsEndpoint(){
         return newsEndpoint;
     }
 

@@ -15,7 +15,7 @@ public class UIRunnable implements Runnable {
     @NonNull
     private final WeakReference<LoadingData> loadingDataRef;
 
-    public UIRunnable(@NonNull List<NewsItem> news, @NonNull WeakReference<NewsRecyclerAdapter> newsRecyclerAdapter, LoadingData loadingData) {
+    public UIRunnable(@NonNull List<NewsDTO> news, @NonNull WeakReference<NewsRecyclerAdapter> newsRecyclerAdapter, LoadingData loadingData) {
 
         this.newsRef = new WeakReference<>(news);
         this.newsRecyclerAdapterRef = newsRecyclerAdapter;

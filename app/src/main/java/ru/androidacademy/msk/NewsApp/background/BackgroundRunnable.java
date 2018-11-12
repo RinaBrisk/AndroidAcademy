@@ -32,7 +32,7 @@ public class BackgroundRunnable implements Runnable {
         if (Thread.interrupted()) return;
         Handler handler = handlerRef.get();
         LoadingData loadingData = loadingDataRef.get();
-        List<NewsItem> news = DataUtils.generateNews();
+        List<NewsDTO> news = DataUtils.generateNews();
 
         if (handler != null) {
             handler.post(new UIRunnable(news, newsRecyclerAdapterRef, loadingData));

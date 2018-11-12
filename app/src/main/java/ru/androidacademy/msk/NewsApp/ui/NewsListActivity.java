@@ -6,7 +6,9 @@ import android.os.Bundle;
 import android.view.Menu;
 import android.view.MenuItem;
 
-import java.io.IOException;
+import com.bumptech.glide.Glide;
+
+import java.util.List;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
@@ -18,13 +20,11 @@ import retrofit2.Call;
 import retrofit2.Callback;
 import retrofit2.Response;
 import ru.androidacademy.msk.NewsApp.DividerNewsItemDecoration;
-import ru.androidacademy.msk.NewsApp.network.NewsList;
 import ru.androidacademy.msk.NewsApp.ui.adapter.NewsRecyclerAdapter;
 import ru.androidacademy.msk.NewsApp.R;
-import ru.androidacademy.msk.NewsApp.State;
 import ru.androidacademy.msk.NewsApp.network.DefaultResponse;
 import ru.androidacademy.msk.NewsApp.network.RestApi;
-import ru.androidacademy.msk.NewsApp.network.UserDTO;
+import ru.androidacademy.msk.NewsApp.network.NewsDTO;
 
 
 public class NewsListActivity extends AppCompatActivity {
@@ -40,10 +40,15 @@ public class NewsListActivity extends AppCompatActivity {
     RecyclerView recyclerView;
 
     @Nullable
-    public Call<DefaultResponse<NewsList<UserDTO>>> searchRequest;
+    public Call<DefaultResponse<List<NewsDTO>>> searchRequest;
 
-    private final NewsRecyclerAdapter.OnItemClickListener clickListener = newsItem -> {
-        NewsDetailsActivity.startActivity(this, newsItem);
+    public static final String DEFAULT_SEARCH_REQUEST = "cheeseburgers";
+
+    private final NewsRecyclerAdapter.OnItemClickListener clickListener = new NewsRecyclerAdapter.OnItemClickListener() {
+        @Override
+        public void onItemClick(@NonNull ru.androidacademy.msk.NewsApp.background.NewsDTO newsItem) {
+            NewsDetailsActivity.startActivity(NewsListActivity.this, newsItem);
+        }
     };
 
     @Override
@@ -52,7 +57,7 @@ public class NewsListActivity extends AppCompatActivity {
         setContentView(R.layout.activity_news_list);
 
         recyclerView = findViewById(R.id.recycler_view);
-        newsRecyclerAdapter = new NewsRecyclerAdapter(this, clickListener);
+        newsRecyclerAdapter = new NewsRecyclerAdapter(this, clickListener, Glide.with(this));
         recyclerView.setAdapter(newsRecyclerAdapter);
 
         RecyclerView.LayoutManager layoutManager;
@@ -70,6 +75,7 @@ public class NewsListActivity extends AppCompatActivity {
     @Override
     public void onStart() {
         super.onStart();
+        loadNews(DEFAULT_SEARCH_REQUEST);
         //backgroundThread = new Thread(new BackgroundRunnable(new Handler(), newsRecyclerAdapter, this));
         //backgroundThread.start();
     }
@@ -110,71 +116,72 @@ public class NewsListActivity extends AppCompatActivity {
     private void loadNews(@NonNull String search) {
 
         searchRequest = RestApi.getInstance()
-                .news()
+                .getNewsEndpoint()
                 .search(search);
 
-        searchRequest.enqueue(new Callback<DefaultResponse<NewsList<UserDTO>>>() {
+        searchRequest.enqueue(new Callback<DefaultResponse<List<NewsDTO>>>() {
             @Override
-            public void onResponse(@NonNull Call<DefaultResponse<NewsList<UserDTO>>> call,
-                                   @NonNull Response<DefaultResponse<NewsList<UserDTO>>> response) {
-                checkResponseAndSetState(response);
+            public void onResponse(@NonNull Call<DefaultResponse<List<NewsDTO>>> call,
+                                   @NonNull Response<DefaultResponse<List<NewsDTO>>> response) {
+               // checkResponseAndSetState(response);
             }
 
             @Override
-            public void onFailure(@NonNull Call<DefaultResponse<NewsList<UserDTO>>> call,
+            public void onFailure(@NonNull Call<DefaultResponse<List<NewsDTO>>> call,
                                   @NonNull Throwable t) {
-                handleError(t);
+              //  handleError(t);
             }
         });
     }
 
-    private void checkResponseAndSetState(@NonNull Response<DefaultResponse<NewsList<UserDTO>>> response){
 
-        if (!response.isSuccessful()) {
-            showState(State.ServerError);
-            return;
-        }
+   // private void checkResponseAndSetState(@NonNull Response<DefaultResponse<List<NewsDTO>>> response){
 
-        assert response.body() != null;
-        UserDTO userDTO =  response.body().getData().getData();
+       // if (!response.isSuccessful()) {
+       //     showState(State.ServerError);
+        //    return;
+       // }
 
-        if(userDTO.getSubsection() == null){
-            showState(State.HasNoSubsection);
-            return;
-        }
-        if(userDTO.getSubsection().isEmpty()){
-            showState(State.HasNoSubsection);
-            return;
-        }
-        if(userDTO.getMultimedia() == null) {
-            showState(State.HasNoMultimedia);
-        }
-    }
+        //assert response.body() != null;
+        //NewsDTO userDTO =  response.body().getResults().getData();
 
-    private void handleError(Throwable throwable) {
-        if (throwable instanceof IOException) {
-            showState(State.NetworkError);
-            return;
-        }
-        showState(State.ServerError);
-    }
+        //if(userDTO.getSubsection() == null){
+           // showState(State.HasNoSubsection);
+         //   return;
+       // }
+       // if(userDTO.getSubsection().isEmpty()){
+       //     showState(State.HasNoSubsection);
+       //     return;
+       // }
+       // if(userDTO.getMultimedia() == null) {
+        //    showState(State.HasNoMultimedia);
+        //}
+    //}
 
-    public void showState(State state){
+    //private void handleError(Throwable throwable) {
+    //    if (throwable instanceof IOException) {
+     //       showState(State.NetworkError);
+     //       return;
+    //    }
+    //    showState(State.ServerError);
+    //}
 
-        switch (state){
-            case HasNoSubsection:{
+    //public void showState(State state){
 
-            }
-            case HasNoMultimedia:{
+    //    switch (state){
+     //       case HasNoSubsection:{
 
-            }
-            case ServerError:{
+     //       }
+     //       case HasNoMultimedia:{
 
-            }
-            case NetworkError:{
+    //        }
+    //        case ServerError:{
 
-            }
-        }
-    }
+    //        }
+    //        case NetworkError:{
+
+    //        }
+    //    }
+   // }
 
 }

@@ -1,10 +1,13 @@
 package ru.androidacademy.msk.NewsApp.network;
 
+import com.google.gson.annotations.SerializedName;
+
 public class DefaultResponse<T> {
 
-     private T data;
+    @SerializedName("results")
+     private T results;
 
-     public T getData(){
-         return data;
+     public T getResults(){
+         return results;
      }
 }
