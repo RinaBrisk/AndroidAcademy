@@ -1,6 +1,7 @@
 package ru.androidacademy.msk.NewsApp.ui.adapter;
 
 import android.content.Context;
+import android.graphics.drawable.Drawable;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -9,7 +10,13 @@ import android.widget.TextView;
 
 import com.bumptech.glide.Glide;
 import com.bumptech.glide.RequestManager;
+import com.bumptech.glide.load.DataSource;
+import com.bumptech.glide.load.engine.DiskCacheStrategy;
+import com.bumptech.glide.load.engine.GlideException;
+import com.bumptech.glide.request.RequestListener;
 import com.bumptech.glide.request.RequestOptions;
+import com.bumptech.glide.request.target.Target;
+
 
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
@@ -19,8 +26,8 @@ import java.util.Locale;
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.recyclerview.widget.RecyclerView;
-import ru.androidacademy.msk.NewsApp.background.NewsDTO;
 import ru.androidacademy.msk.NewsApp.R;
+import ru.androidacademy.msk.NewsApp.network.NewsDTO;
 
 public class NewsRecyclerAdapter extends RecyclerView.Adapter<NewsRecyclerAdapter.ViewHolder> {
 
@@ -45,13 +52,14 @@ public class NewsRecyclerAdapter extends RecyclerView.Adapter<NewsRecyclerAdapte
 
     @NonNull
     @Override
-    public ViewHolder onCreateViewHolder(@NonNull ViewGroup viewGroup, int viewType, RequestManager glideRequestManager) {
+    public ViewHolder onCreateViewHolder(@NonNull ViewGroup viewGroup, int viewType) {
         //int viewType - если в Recycler помещаются несколько типов элементов, например реклама
         //тогда реализуется метод GetItemViewType
         return new ViewHolder(
                 inflater.inflate(R.layout.news_item, viewGroup, false), clickListener, glideRequestManager);
         //xml элементы одной новости помещаются в ViewGroup
     }
+
 
     @Override
     public void onBindViewHolder(@NonNull ViewHolder holder, int position) {
@@ -109,13 +117,28 @@ public class NewsRecyclerAdapter extends RecyclerView.Adapter<NewsRecyclerAdapte
 
         }
 
-        void bind(NewsDTO newsItem) {
+        void bind(@NonNull NewsDTO newsItem) {
 
-           // imageLoader.load(newsItem.getImageUrl()).into(imageView);
-            category.setText(newsItem.getCategory().getName());
+            imageLoader.load(newsItem.getMultimedia()).
+                    listener(new RequestListener<Drawable>() { //интерфейс для мониторинга статуса запроса, пока идет загрузка изображений
+                        @Override
+                        public boolean onLoadFailed(@Nullable GlideException e, Object model, Target<Drawable> target, boolean isFirstResource) {
+                            return false;
+                        }
+
+                        @Override
+                        public boolean onResourceReady(Drawable resource, Object model, Target<Drawable> target, DataSource dataSource, boolean isFirstResource) {
+                            return false;
+                        }
+                    })
+                    .apply(RequestOptions.diskCacheStrategyOf(DiskCacheStrategy.AUTOMATIC))
+                    .thumbnail(0.3f) //установка миниатюры, пока не загрузилось изображение. 0.3% от всего объема изображения - миниатюра
+                    .into(imageView); //????
+
+            category.setText(newsItem.getSubsection()); //????
             title.setText(newsItem.getTitle());
             previewText.setText(newsItem.getPreviewText());
-            publishedData.setText(new SimpleDateFormat("dd.MM.yyyy HH:mm", Locale.getDefault()).format(newsItem.getPublishDate()));
+            publishedData.setText(new SimpleDateFormat("dd.MM.yyyy HH:mm", Locale.getDefault()).format(newsItem.getPublishedDate()));
         }
     }
 }
