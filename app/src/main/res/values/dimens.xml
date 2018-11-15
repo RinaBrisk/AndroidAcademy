@@ -12,7 +12,9 @@
     <dimen name="ic_size">28dp</dimen>
     <dimen name="line_divider">2dp</dimen>
     <dimen name="margin_about">4dp</dimen>
-    <dimen name="marginStart_headingImage">4dp</dimen>
+    <dimen name="marginStart_heading_image">4dp</dimen>
+    <dimen name="marginStart_network_error">16dp</dimen>
+    <dimen name="marginEnd_network_error">16dp</dimen>
     <dimen name="margin_title_details">4dp</dimen>
     <dimen name="marginTop_full_text_details">8dp</dimen>
     <dimen name="photo">200dp</dimen>
@@ -25,7 +27,7 @@
     <dimen name="paddingBottom_details">16dp</dimen>
     <dimen name="paddingBottom_about">8dp</dimen>
     <dimen name="paddingTop_about">8dp</dimen>
-    <dimen name="paddingTop_publishedData">8dp</dimen>
+    <dimen name="paddingTop_published_data">8dp</dimen>
     <dimen name="textSize_about">16sp</dimen>
     <dimen name="textSize_category">16sp</dimen>
     <dimen name="textSize_title">18sp</dimen>

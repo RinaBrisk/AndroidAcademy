@@ -10,16 +10,11 @@ import okhttp3.Response;
 
 public class ApiKeyInterceptor implements Interceptor {
 
-    private static final String API_KEY = "api-key";
+    private static final String API_KEY = "bf1b28aecc9c45b4b56820cee693e120";
+    private static final String API_KEY_NAME = "api-key";
 
-    private final String apiKey;
-
-    private ApiKeyInterceptor(String apiKey){
-        this.apiKey = apiKey;
-    }
-
-    public static Interceptor create(@NonNull String apiKey){
-        return new ApiKeyInterceptor(apiKey);
+    public static Interceptor create(){
+        return new ApiKeyInterceptor();
     }
 
     @Override
@@ -27,13 +22,13 @@ public class ApiKeyInterceptor implements Interceptor {
 
         final Request requestWithoutApiKey = chain.request();
 
-        final HttpUrl httpUrl = requestWithoutApiKey.url()
+        final HttpUrl url = requestWithoutApiKey.url()
                 .newBuilder()
-                .addQueryParameter(API_KEY, apiKey)
                 .build();
 
         final Request requestWithAttachedApiKey = requestWithoutApiKey.newBuilder()
-                .url(httpUrl)
+                .url(url)
+                .addHeader(API_KEY_NAME, API_KEY)
                 .build();
 
         return chain.proceed(requestWithAttachedApiKey);

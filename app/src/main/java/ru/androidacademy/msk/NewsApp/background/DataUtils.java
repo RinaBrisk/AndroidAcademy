@@ -1,9 +1,12 @@
 package ru.androidacademy.msk.NewsApp.background;
-
+/*
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.GregorianCalendar;
 import java.util.List;
+
+import ru.androidacademy.msk.NewsApp.network.NewsDTO;
+
 
 public class DataUtils{
 
@@ -140,3 +143,4 @@ public class DataUtils{
     return new GregorianCalendar(year, month - 1, date, hrs, min).getTime();
   }
 }
+*/

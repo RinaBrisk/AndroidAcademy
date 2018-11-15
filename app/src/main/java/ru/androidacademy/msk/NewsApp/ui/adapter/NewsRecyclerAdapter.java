@@ -8,7 +8,6 @@ import android.view.ViewGroup;
 import android.widget.ImageView;
 import android.widget.TextView;
 
-import com.bumptech.glide.Glide;
 import com.bumptech.glide.RequestManager;
 import com.bumptech.glide.load.DataSource;
 import com.bumptech.glide.load.engine.DiskCacheStrategy;
@@ -17,16 +16,14 @@ import com.bumptech.glide.request.RequestListener;
 import com.bumptech.glide.request.RequestOptions;
 import com.bumptech.glide.request.target.Target;
 
-
-import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.List;
-import java.util.Locale;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.recyclerview.widget.RecyclerView;
 import ru.androidacademy.msk.NewsApp.R;
+import ru.androidacademy.msk.NewsApp.Utils;
 import ru.androidacademy.msk.NewsApp.network.NewsDTO;
 
 public class NewsRecyclerAdapter extends RecyclerView.Adapter<NewsRecyclerAdapter.ViewHolder> {
@@ -45,9 +42,6 @@ public class NewsRecyclerAdapter extends RecyclerView.Adapter<NewsRecyclerAdapte
         inflater = LayoutInflater.from(context);
         this.clickListener = onItemClickListener;
         this.glideRequestManager = glideRequestManager;
-
-        //RequestOptions imageOption = new RequestOptions();
-       // this.imageLoader = Glide.with(context).applyDefaultRequestOptions(imageOption);
     }
 
     @NonNull
@@ -101,7 +95,6 @@ public class NewsRecyclerAdapter extends RecyclerView.Adapter<NewsRecyclerAdapte
                 //а реализация onItemClick осуществляется в NewsListActivity
                 int position = getAdapterPosition();
                 //позиция List == AdapterPosition, а позиция на layout  может быть иной
-
                 if (clickListener != null && position != RecyclerView.NO_POSITION) {
                     clickListener.onItemClick(news.get(position));
                 }
@@ -114,15 +107,15 @@ public class NewsRecyclerAdapter extends RecyclerView.Adapter<NewsRecyclerAdapte
             publishedData = this.itemView.findViewById(R.id.tv_published_data);
 
             this.imageLoader = glideRequestManager;
-
         }
 
         void bind(@NonNull NewsDTO newsItem) {
 
-            imageLoader.load(newsItem.getMultimedia()).
+            imageLoader.load(newsItem.getUrl()).
                     listener(new RequestListener<Drawable>() { //интерфейс для мониторинга статуса запроса, пока идет загрузка изображений
                         @Override
                         public boolean onLoadFailed(@Nullable GlideException e, Object model, Target<Drawable> target, boolean isFirstResource) {
+                            Utils.setVisible(imageView, false);
                             return false;
                         }
 
@@ -133,12 +126,17 @@ public class NewsRecyclerAdapter extends RecyclerView.Adapter<NewsRecyclerAdapte
                     })
                     .apply(RequestOptions.diskCacheStrategyOf(DiskCacheStrategy.AUTOMATIC))
                     .thumbnail(0.3f) //установка миниатюры, пока не загрузилось изображение. 0.3% от всего объема изображения - миниатюра
-                    .into(imageView); //????
+                    .into(imageView);
 
-            category.setText(newsItem.getSubsection()); //????
+            if(newsItem.getCategory() == null || newsItem.getCategory().isEmpty()){
+                Utils.setVisible(category, false);
+            }else{
+                category.setText(newsItem.getCategory());
+            }
+
             title.setText(newsItem.getTitle());
             previewText.setText(newsItem.getPreviewText());
-            publishedData.setText(new SimpleDateFormat("dd.MM.yyyy HH:mm", Locale.getDefault()).format(newsItem.getPublishedDate()));
+            publishedData.setText(Utils.FormatDateTime(itemView.getContext(), newsItem.getPublishedDate()));
         }
     }
 }

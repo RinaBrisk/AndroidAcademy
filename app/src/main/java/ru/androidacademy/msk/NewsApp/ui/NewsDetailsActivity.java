@@ -8,6 +8,7 @@ import android.widget.ImageView;
 import android.widget.TextView;
 import com.bumptech.glide.Glide;
 
+import java.io.Serializable;
 import java.text.SimpleDateFormat;
 import java.util.Locale;
 
@@ -15,8 +16,8 @@ import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.appcompat.app.ActionBar;
 import androidx.appcompat.app.AppCompatActivity;
-import ru.androidacademy.msk.NewsApp.background.NewsDTO;
 import ru.androidacademy.msk.NewsApp.R;
+import ru.androidacademy.msk.NewsApp.network.NewsDTO;
 
 public class NewsDetailsActivity extends AppCompatActivity {
 
@@ -24,7 +25,7 @@ public class NewsDetailsActivity extends AppCompatActivity {
 
     public static void startActivity(@NonNull Context context, @NonNull NewsDTO newsItem) {
         Intent intent = new Intent(context, NewsDetailsActivity.class);
-        intent.putExtra(KEY_NEWS_ITEM, newsItem);
+        intent.putExtra(KEY_NEWS_ITEM, (Serializable) newsItem);
         context.startActivity(intent);
     }
 
@@ -40,14 +41,14 @@ public class NewsDetailsActivity extends AppCompatActivity {
 
         final NewsDTO newsItem = (NewsDTO) getIntent().getSerializableExtra(KEY_NEWS_ITEM);
 
-        Glide.with(this).load(newsItem.getImageUrl()).into(imageView);
-        title.setText(newsItem.getTitle());
-        publishedDate.setText(new SimpleDateFormat("dd.MM.yyyy HH:mm", Locale.getDefault()).format(newsItem.getPublishDate()));
-        fullText.setText(newsItem.getFullText());
+       // Glide.with(this).load(newsItem.getImageUrl()).into(imageView);
+       // title.setText(newsItem.getTitle());
+       // publishedDate.setText(new SimpleDateFormat("dd.MM.yyyy HH:mm", Locale.getDefault()).format(newsItem.getPublishDate()));
+       // fullText.setText(newsItem.getFullText());
 
         ActionBar actionBar = getSupportActionBar();
         if (actionBar != null) {
-            actionBar.setTitle(newsItem.getCategory().getName());
+       //     actionBar.setTitle(newsItem.getCategory().getName());
             actionBar.setDisplayHomeAsUpEnabled(true);
         }
     }

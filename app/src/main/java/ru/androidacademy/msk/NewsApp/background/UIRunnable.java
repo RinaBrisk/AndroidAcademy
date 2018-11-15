@@ -1,9 +1,10 @@
 package ru.androidacademy.msk.NewsApp.background;
 
-import java.lang.ref.WeakReference;
+/*import java.lang.ref.WeakReference;
 import java.util.List;
 
 import androidx.annotation.NonNull;
+import ru.androidacademy.msk.NewsApp.network.NewsDTO;
 import ru.androidacademy.msk.NewsApp.ui.adapter.NewsRecyclerAdapter;
 
 public class UIRunnable implements Runnable {
@@ -30,3 +31,4 @@ public class UIRunnable implements Runnable {
         loadingDataRef.get().showProgress(false);
     }
 }
+*/

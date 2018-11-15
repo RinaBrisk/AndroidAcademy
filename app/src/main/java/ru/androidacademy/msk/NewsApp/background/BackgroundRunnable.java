@@ -1,11 +1,12 @@
 package ru.androidacademy.msk.NewsApp.background;
 
-import android.os.Handler;
+/*import android.os.Handler;
 
 import java.lang.ref.WeakReference;
 import java.util.List;
 
 import androidx.annotation.NonNull;
+import ru.androidacademy.msk.NewsApp.network.NewsDTO;
 import ru.androidacademy.msk.NewsApp.ui.adapter.NewsRecyclerAdapter;
 
 public class BackgroundRunnable implements Runnable {
@@ -39,3 +40,4 @@ public class BackgroundRunnable implements Runnable {
         }
     }
 }
+*/
