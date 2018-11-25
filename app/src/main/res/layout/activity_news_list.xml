@@ -1,29 +1,44 @@
 <?xml version="1.0" encoding="utf-8"?>
 
-<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:orientation="vertical"
-    android:background="@color/backgroundNewsList">
+    android:background="@color/backgroundNewsList"
+    android:orientation="vertical">
 
-    <Button
-        android:id="@+id/btn_alert_dialog"
-        android:text="Home"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:background="@color/backgroundNewsList"/>
-
-    <androidx.recyclerview.widget.RecyclerView
-        android:id="@+id/recycler_view"
+    <FrameLayout
         android:layout_width="match_parent"
-        android:layout_height="wrap_content" />
+        android:layout_height="match_parent"
+        android:layout_gravity="center">
 
-    <ProgressBar
-        android:id="@+id/progress_bar"
-        style="?android:attr/progressBarStyle"
+        <ProgressBar
+            android:id="@+id/progress_bar"
+            style="?android:attr/progressBarStyle"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center" />
+
+    </FrameLayout>
+
+    <LinearLayout
+        android:id="@+id/alert_dialog"
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_gravity="center" />
+        android:layout_height="match_parent"
+        android:orientation="vertical">
+
+        <Button
+            android:id="@+id/btn_alert_dialog"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:background="@color/backgroundNewsList"
+            android:text="Home" />
+
+        <androidx.recyclerview.widget.RecyclerView
+            android:id="@+id/recycler_view"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content" />
+
+    </LinearLayout>
 
     <LinearLayout
         android:id="@+id/network_error"
@@ -33,7 +48,7 @@
         android:layout_marginEnd="@dimen/marginEnd_network_error"
         android:gravity="center"
         android:orientation="vertical"
-        android:visibility="gone">
+        android:visibility="visible">
 
         <TextView
             android:id="@+id/tv_network_error"
@@ -42,7 +57,7 @@
             android:gravity="center"
             android:text="@string/tv_network_error"
             android:textColor="@android:color/black"
-            android:textSize="18sp" />
+            android:textSize="@dimen/textSize_network_error"/>
 
         <Button
             android:id="@+id/btn_repeat"
@@ -51,6 +66,7 @@
             android:text="@string/btn_repeat" />
     </LinearLayout>
 
-</LinearLayout>
+
+</RelativeLayout>
 
 

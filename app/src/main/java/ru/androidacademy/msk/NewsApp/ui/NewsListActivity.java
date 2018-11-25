@@ -16,6 +16,7 @@ import java.util.List;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
+import androidx.appcompat.app.AlertDialog;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.recyclerview.widget.GridLayoutManager;
 import androidx.recyclerview.widget.LinearLayoutManager;
@@ -25,6 +26,7 @@ import retrofit2.Callback;
 import retrofit2.Response;
 import ru.androidacademy.msk.NewsApp.DividerNewsItemDecoration;
 import ru.androidacademy.msk.NewsApp.State;
+import ru.androidacademy.msk.NewsApp.Utils;
 import ru.androidacademy.msk.NewsApp.ui.adapter.NewsRecyclerAdapter;
 import ru.androidacademy.msk.NewsApp.R;
 import ru.androidacademy.msk.NewsApp.network.DefaultResponse;
@@ -45,6 +47,7 @@ public class NewsListActivity extends AppCompatActivity {
     private View networkError;
     private Button btnRepeat;
     private ProgressBar progressBar;
+    private View alertDialog;
 
     private final NewsRecyclerAdapter.OnItemClickListener clickListener = new NewsRecyclerAdapter.OnItemClickListener() {
         @Override
@@ -83,6 +86,7 @@ public class NewsListActivity extends AppCompatActivity {
             @Override
             public void onClick(View v) {
                 loadNews(DEFAULT_SEARCH_REQUEST);
+                showState(State.Repeat);
             }
         });
     }
@@ -127,7 +131,7 @@ public class NewsListActivity extends AppCompatActivity {
             @Override
             public void onResponse(@NonNull Call<DefaultResponse<List<NewsDTO>>> call,
                                    @NonNull Response<DefaultResponse<List<NewsDTO>>> response) {
-                progressBar.setVisibility(View.INVISIBLE);
+                showState(State.HasData);
                 checkResponseAndSetState(response);
 
             }
@@ -135,7 +139,6 @@ public class NewsListActivity extends AppCompatActivity {
             @Override
             public void onFailure(@NonNull Call<DefaultResponse<List<NewsDTO>>> call,
                                   @NonNull Throwable t) {
-                progressBar.setVisibility(View.INVISIBLE);
                 handleError(t);
             }
         });
@@ -147,7 +150,6 @@ public class NewsListActivity extends AppCompatActivity {
         final DefaultResponse<List<NewsDTO>> body = response.body();
 
         if(body != null){
-            showState(State.HasData);
             final List<NewsDTO> data =  body.getResults();
             newsRecyclerAdapter.replaceItems(data);
         }
@@ -163,10 +165,22 @@ public class NewsListActivity extends AppCompatActivity {
 
         switch (state) {
             case NetworkError: {
+
                 networkError.setVisibility(View.VISIBLE);
+                progressBar.setVisibility(View.GONE);
+                alertDialog.setVisibility(View.GONE);
+                return;
+            }
+            case Repeat:{
+
+                networkError.setVisibility(View.GONE);
+                progressBar.setVisibility(View.VISIBLE);
                 return;
             }
             case HasData:{
+
+                progressBar.setVisibility(View.INVISIBLE);
+                alertDialog.setVisibility(View.VISIBLE);
                 networkError.setVisibility(View.GONE);
             }
         }
@@ -178,6 +192,7 @@ public class NewsListActivity extends AppCompatActivity {
         networkError = findViewById(R.id.network_error);
         btnRepeat = findViewById(R.id.btn_repeat);
         progressBar = findViewById(R.id.progress_bar);
+        alertDialog = findViewById(R.id.alert_dialog);
     }
 }
 
