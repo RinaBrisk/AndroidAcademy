@@ -20,4 +20,6 @@
     <string name="full_text" translatable="false">Full text\n...\n...\n...\n...\n...</string>
     <string name="tv_network_error">Network error</string>
     <string name="btn_repeat">Repeat</string>
+    <string name="category_home">Home</string>
+
 </resources>

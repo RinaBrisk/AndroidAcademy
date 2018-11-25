@@ -1,6 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
     <dimen name="btn_height">20dp</dimen>
+    <dimen name="category_btn_height">40dp</dimen>
     <dimen name="btn_social_size">40dp</dimen>
     <dimen name="card_corner_radius">8dp</dimen>
     <dimen name="card_elevation">4dp</dimen>
@@ -17,6 +18,8 @@
     <dimen name="marginEnd_network_error">16dp</dimen>
     <dimen name="margin_title_details">4dp</dimen>
     <dimen name="marginTop_full_text_details">8dp</dimen>
+    <dimen name="marginStart_news_category">4dp</dimen>
+    <dimen name="marginEnd_news_category">4dp</dimen>
     <dimen name="photo">200dp</dimen>
     <dimen name="photo_land">230dp</dimen>
     <dimen name="paddingEnd_about">8dp</dimen>
@@ -28,6 +31,8 @@
     <dimen name="paddingBottom_about">8dp</dimen>
     <dimen name="paddingTop_about">8dp</dimen>
     <dimen name="paddingTop_published_data">8dp</dimen>
+    <dimen name="paddingStart_news_category">4dp</dimen>
+    <dimen name="paddingEnd_news_category">4dp</dimen>
     <dimen name="textSize_about">16sp</dimen>
     <dimen name="textSize_category">16sp</dimen>
     <dimen name="textSize_title">18sp</dimen>
