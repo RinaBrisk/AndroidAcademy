@@ -1,5 +1,6 @@
 package ru.androidacademy.msk.NewsApp.ui;
 
+import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.res.Configuration;
@@ -37,7 +38,9 @@ import ru.androidacademy.msk.NewsApp.network.NewsDTO;
 public class NewsListActivity extends AppCompatActivity {
 
     private static final int LAYOUT = R.layout.activity_news_list;
-    private static final String DEFAULT_SEARCH_REQUEST = "home";
+
+    private static String sectionSearch = "home";
+    private static  int chosenCategory = 0;
 
     private NewsRecyclerAdapter newsRecyclerAdapter;
     private RecyclerView recyclerView;
@@ -48,7 +51,6 @@ public class NewsListActivity extends AppCompatActivity {
     private Button btnRepeat;
     private ProgressBar progressBar;
     private Button btnNewsCategory;
-   // private AlertDialog categoryAlertDialog;
 
     private final NewsRecyclerAdapter.OnItemClickListener clickListener = new NewsRecyclerAdapter.OnItemClickListener() {
         @Override
@@ -87,7 +89,7 @@ public class NewsListActivity extends AppCompatActivity {
         btnRepeat.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                loadNews(DEFAULT_SEARCH_REQUEST);
+                loadNews(sectionSearch);
                 showState(State.Repeat);
             }
         });
@@ -95,11 +97,11 @@ public class NewsListActivity extends AppCompatActivity {
 
     public void btnNewsCategoryListener(){
 
-        int checkedCategory = 1;
+
         btnNewsCategory.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                DialogNewsCategory.onCreateAlertDialog(NewsListActivity.this, btnNewsCategory, checkedCategory);
+                /*DialogNewsCategory.*/onCreateAlertDialog();
             }
         });
     }
@@ -107,7 +109,7 @@ public class NewsListActivity extends AppCompatActivity {
     @Override
     public void onStart() {
         super.onStart();
-        loadNews(DEFAULT_SEARCH_REQUEST);
+        loadNews(sectionSearch);
     }
 
     @Override
@@ -132,14 +134,13 @@ public class NewsListActivity extends AppCompatActivity {
         }
     }
 
-    private void loadNews(@NonNull String category) {
+    public void loadNews(@NonNull String category) {
 
         searchRequest = RestApi.getInstance()
                 .getNewsEndpoint()
                 .search(category);
 
-        progressBar.setVisibility(View.VISIBLE);
-        btnNewsCategory.setVisibility(View.INVISIBLE);
+        showState(State.LoadNews);
 
         searchRequest.enqueue(new Callback<DefaultResponse<List<NewsDTO>>>() {
             @Override
@@ -148,7 +149,7 @@ public class NewsListActivity extends AppCompatActivity {
                 showState(State.HasData);
                 checkResponseAndSetState(response);
             }
-
+            
             @Override
             public void onFailure(@NonNull Call<DefaultResponse<List<NewsDTO>>> call,
                                   @NonNull Throwable t) {
@@ -195,6 +196,14 @@ public class NewsListActivity extends AppCompatActivity {
                 progressBar.setVisibility(View.INVISIBLE);
                 btnNewsCategory.setVisibility(View.VISIBLE);
                 networkError.setVisibility(View.GONE);
+                recyclerView.setVisibility(View.VISIBLE);
+                return;
+            }
+            case LoadNews:{
+
+                progressBar.setVisibility(View.VISIBLE);
+                btnNewsCategory.setVisibility(View.INVISIBLE);
+                recyclerView.setVisibility(View.INVISIBLE);
             }
         }
     }
@@ -206,6 +215,29 @@ public class NewsListActivity extends AppCompatActivity {
         btnRepeat = findViewById(R.id.btn_repeat);
         progressBar = findViewById(R.id.progress_bar);
         btnNewsCategory = findViewById(R.id.btn_news_category);
+    }
+
+    public void onCreateAlertDialog() {
+
+        final String[] categoriesInDialog = {"Home", "World", "National", "Politics", "Business", "Technology", "Science",
+                "Health", "Sports", "Arts", "Books", "Movies", "Theater"};
+        final String[] categoriesInRequest = {"home", "world", "national", "politics", "business", "technology", "science",
+                "health", "sports", "arts", "books", "movies", "theater"};
+
+        AlertDialog.Builder builder = new AlertDialog.Builder(NewsListActivity.this);
+        builder.setSingleChoiceItems(categoriesInDialog,chosenCategory, new DialogInterface.OnClickListener() {
+            @Override
+            public void onClick(DialogInterface dialog, int which) {
+
+                chosenCategory = which;
+                btnNewsCategory.setText(categoriesInDialog[chosenCategory]);
+                loadNews(categoriesInRequest[chosenCategory]);
+                dialog.dismiss();
+            }
+        });
+
+        AlertDialog alert = builder.create();
+        alert.show();
     }
 }
 

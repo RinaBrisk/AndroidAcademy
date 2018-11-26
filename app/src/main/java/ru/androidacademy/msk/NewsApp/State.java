@@ -4,5 +4,6 @@ public enum State {
 
     NetworkError,
     Repeat,
-    HasData
+    HasData,
+    LoadNews
 }
