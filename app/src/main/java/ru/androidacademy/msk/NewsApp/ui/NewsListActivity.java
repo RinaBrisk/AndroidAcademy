@@ -34,6 +34,8 @@ import ru.androidacademy.msk.NewsApp.network.DefaultResponse;
 import ru.androidacademy.msk.NewsApp.network.RestApi;
 import ru.androidacademy.msk.NewsApp.network.NewsDTO;
 
+import static ru.androidacademy.msk.NewsApp.ui.adapter.NewsRecyclerAdapter.*;
+
 
 public class NewsListActivity extends AppCompatActivity {
 
@@ -52,12 +54,7 @@ public class NewsListActivity extends AppCompatActivity {
     private ProgressBar progressBar;
     private Button btnNewsCategory;
 
-    private final NewsRecyclerAdapter.OnItemClickListener clickListener = new NewsRecyclerAdapter.OnItemClickListener() {
-        @Override
-        public void onItemClick(String detailsUrl) {
-            NewsDetailsActivity.startActivity(NewsListActivity.this, detailsUrl);
-        }
-    };
+    private final OnItemClickListener clickListener = newsDTO -> NewsDetailsActivity.startActivity(NewsListActivity.this, newsDTO);
 
     @Override
     public void onCreate(@Nullable Bundle savedInstanceState) {

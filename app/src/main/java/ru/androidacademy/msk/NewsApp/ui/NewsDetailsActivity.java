@@ -24,13 +24,14 @@ import ru.androidacademy.msk.NewsApp.network.NewsDTO;
 public class NewsDetailsActivity extends AppCompatActivity {
 
     private static final String KEY_NEWS_ITEM = "KEY_NEWS_ITEM";
+    private static final int LAYOUT = R.layout.activity_news_details;
 
     private WebView webView;
-    private String detailsUrl;
+    private NewsDTO newsDTO;
 
-    public static void startActivity(@NonNull Context context, @NonNull String detailsUrl) {
+    public static void startActivity(@NonNull Context context, @NonNull NewsDTO newsDTO) {
         Intent intent = new Intent(context, NewsDetailsActivity.class);
-        intent.putExtra(KEY_NEWS_ITEM, (Serializable) detailsUrl);
+        intent.putExtra(KEY_NEWS_ITEM, (Serializable) newsDTO);
         context.startActivity(intent);
     }
 
@@ -38,9 +39,9 @@ public class NewsDetailsActivity extends AppCompatActivity {
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_news_details);
+        setContentView(LAYOUT);
 
-        detailsUrl = getIntent().getStringExtra(KEY_NEWS_ITEM);
+        newsDTO = getIntent().getStringExtra(KEY_NEWS_ITEM);
 
         webView = findViewById(R.id.webView);
 

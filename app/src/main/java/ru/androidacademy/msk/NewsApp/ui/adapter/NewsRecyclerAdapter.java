@@ -69,14 +69,14 @@ public class NewsRecyclerAdapter extends RecyclerView.Adapter<NewsRecyclerAdapte
     }
 
 
-    public void replaceItems(@NonNull List<NewsDTO> newsItems) {
+    public void replaceItems(@NonNull List<NewsDTO> newsDTOS) {
         news.clear();
-        news.addAll(newsItems);
+        news.addAll(newsDTOS);
         notifyDataSetChanged();
     }
 
     public interface OnItemClickListener {
-        void onItemClick(String detailsUrl);
+        void onItemClick(@NonNull NewsDTO newsDTO);
     }
 
     class ViewHolder extends RecyclerView.ViewHolder {
@@ -92,13 +92,13 @@ public class NewsRecyclerAdapter extends RecyclerView.Adapter<NewsRecyclerAdapte
         public ViewHolder(@NonNull View itemView, @Nullable final OnItemClickListener clickListener, @NonNull RequestManager glideRequestManager) {
             super(itemView);
 
-            itemView.setOnClickListener(newsItem -> {
+            itemView.setOnClickListener(newsDTO -> {
                 //прикрепляем к элементам listener, чтобы он срабатывал при нажатии
                 //а реализация onItemClick осуществляется в NewsListActivity
                 int position = getAdapterPosition();
                 //позиция List == AdapterPosition, а позиция на layout  может быть иной
                 if (clickListener != null && position != RecyclerView.NO_POSITION) {
-                    clickListener.onItemClick(news.get(position).getUrl());
+                    clickListener.onItemClick(news.get(position));
                 }
             });
 
