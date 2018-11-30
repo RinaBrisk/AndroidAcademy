@@ -16,6 +16,7 @@ import com.bumptech.glide.request.RequestListener;
 import com.bumptech.glide.request.RequestOptions;
 import com.bumptech.glide.request.target.Target;
 
+import java.net.URL;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -36,6 +37,7 @@ public class NewsRecyclerAdapter extends RecyclerView.Adapter<NewsRecyclerAdapte
     private final OnItemClickListener clickListener;
 
     private RequestManager glideRequestManager;
+
 
     public NewsRecyclerAdapter(@NonNull Context context, @NonNull OnItemClickListener onItemClickListener, RequestManager glideRequestManager) {
 
@@ -74,7 +76,7 @@ public class NewsRecyclerAdapter extends RecyclerView.Adapter<NewsRecyclerAdapte
     }
 
     public interface OnItemClickListener {
-        void onItemClick(@NonNull NewsDTO newsItem);
+        void onItemClick(String detailsUrl);
     }
 
     class ViewHolder extends RecyclerView.ViewHolder {
@@ -96,7 +98,7 @@ public class NewsRecyclerAdapter extends RecyclerView.Adapter<NewsRecyclerAdapte
                 int position = getAdapterPosition();
                 //позиция List == AdapterPosition, а позиция на layout  может быть иной
                 if (clickListener != null && position != RecyclerView.NO_POSITION) {
-                    clickListener.onItemClick(news.get(position));
+                    clickListener.onItemClick(news.get(position).getUrl());
                 }
             });
 
@@ -128,15 +130,16 @@ public class NewsRecyclerAdapter extends RecyclerView.Adapter<NewsRecyclerAdapte
                     .thumbnail(0.3f) //установка миниатюры, пока не загрузилось изображение. 0.3% от всего объема изображения - миниатюра
                     .into(imageView);
 
-            if(newsItem.getCategory() == null || newsItem.getCategory().isEmpty()){
+            if (newsItem.getCategory() == null || newsItem.getCategory().isEmpty()) {
                 Utils.setVisible(category, false);
-            }else{
+            } else {
                 category.setText(newsItem.getCategory());
             }
 
             title.setText(newsItem.getTitle());
             previewText.setText(newsItem.getPreviewText());
             publishedData.setText(Utils.FormatDateTime(itemView.getContext(), newsItem.getPublishedDate()));
+
         }
     }
 }

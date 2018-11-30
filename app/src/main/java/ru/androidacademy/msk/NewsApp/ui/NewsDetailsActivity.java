@@ -1,9 +1,11 @@
 package ru.androidacademy.msk.NewsApp.ui;
 
+import android.annotation.SuppressLint;
 import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
 import android.view.MenuItem;
+import android.webkit.WebView;
 import android.widget.ImageView;
 import android.widget.TextView;
 import com.bumptech.glide.Glide;
@@ -23,28 +25,34 @@ public class NewsDetailsActivity extends AppCompatActivity {
 
     private static final String KEY_NEWS_ITEM = "KEY_NEWS_ITEM";
 
-    public static void startActivity(@NonNull Context context, @NonNull NewsDTO newsItem) {
+    private WebView webView;
+    private String detailsUrl;
+
+    public static void startActivity(@NonNull Context context, @NonNull String detailsUrl) {
         Intent intent = new Intent(context, NewsDetailsActivity.class);
-        intent.putExtra(KEY_NEWS_ITEM, (Serializable) newsItem);
+        intent.putExtra(KEY_NEWS_ITEM, (Serializable) detailsUrl);
         context.startActivity(intent);
     }
 
+    @SuppressLint("SetJavaScriptEnabled")
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_news_details);
 
-        final ImageView imageView = findViewById(R.id.heading_image_details);
-        final TextView title = findViewById(R.id.tv_title_details);
-        final TextView publishedDate = findViewById(R.id.tv_published_data_details);
-        final TextView fullText = findViewById(R.id.tv_full_text);
+        detailsUrl = getIntent().getStringExtra(KEY_NEWS_ITEM);
 
-        final NewsDTO newsItem = (NewsDTO) getIntent().getSerializableExtra(KEY_NEWS_ITEM);
+        webView = findViewById(R.id.webView);
 
-       // Glide.with(this).load(newsItem.getImageUrl()).into(imageView);
-       // title.setText(newsItem.getTitle());
-       // publishedDate.setText(new SimpleDateFormat("dd.MM.yyyy HH:mm", Locale.getDefault()).format(newsItem.getPublishDate()));
-       // fullText.setText(newsItem.getFullText());
+        // включаем поддержку JavaScript
+        /*JavaScript по умолчанию выключен в Webview.
+        Следовательно, веб-страницы, содержащие JavaScript
+        не будут работать должным образом.*/
+        webView.getSettings().setJavaScriptEnabled(true);
+
+        // указываем страницу загрузки
+        webView.loadUrl(detailsUrl);
+
 
         ActionBar actionBar = getSupportActionBar();
         if (actionBar != null) {

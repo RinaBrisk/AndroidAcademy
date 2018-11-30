@@ -54,8 +54,8 @@ public class NewsListActivity extends AppCompatActivity {
 
     private final NewsRecyclerAdapter.OnItemClickListener clickListener = new NewsRecyclerAdapter.OnItemClickListener() {
         @Override
-        public void onItemClick(@NonNull NewsDTO newsItem) {
-            NewsDetailsActivity.startActivity(NewsListActivity.this, newsItem);
+        public void onItemClick(String detailsUrl) {
+            NewsDetailsActivity.startActivity(NewsListActivity.this, detailsUrl);
         }
     };
 

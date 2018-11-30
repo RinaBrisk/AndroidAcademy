@@ -1,64 +1,8 @@
 <?xml version="1.0" encoding="utf-8"?>
-<ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:tools="http://schemas.android.com/tools"
+<WebView xmlns:android="http://schemas.android.com/apk/res/android"
+    android:id="@+id/webView"
     android:layout_width="match_parent"
-    android:layout_height="wrap_content"
+    android:layout_height="match_parent"
     android:orientation="vertical">
 
-    <LinearLayout
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:focusableInTouchMode="true"
-        android:orientation="vertical">
-
-        <ImageView
-            android:id="@+id/heading_image_details"
-            android:layout_width="match_parent"
-            android:layout_height="@dimen/heading_details_image"
-            android:layout_gravity="top"
-            android:contentDescription="@null"
-            android:scaleType="centerCrop"
-            tools:src="@tools:sample/avatars" />
-
-        <LinearLayout
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:orientation="vertical"
-            android:paddingStart="@dimen/paddingStart_details"
-            android:paddingEnd="@dimen/paddingEnd_details"
-            android:paddingBottom="@dimen/paddingBottom_details">
-
-            <TextView
-                android:id="@+id/tv_title_details"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_marginTop="@dimen/margin_title_details"
-                android:layout_marginBottom="@dimen/margin_title_details"
-                android:text="@string/title"
-                android:textColor="@android:color/black"
-                android:textSize="@dimen/textSize_details_title"
-                android:textStyle="bold" />
-
-            <TextView
-                android:id="@+id/tv_published_data_details"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:text="@string/published_data"
-                android:textColor="@android:color/darker_gray"
-                android:textSize="@dimen/textSize_published_data" />
-
-            <TextView
-                android:id="@+id/tv_full_text"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_marginTop="@dimen/marginTop_full_text_details"
-                android:text="@string/full_text"
-                android:textColor="@android:color/black"
-                android:textSize="@dimen/textSize_details_full_text"
-                />
-
-        </LinearLayout>
-
-    </LinearLayout>
-
-</ScrollView>
+</WebView>
