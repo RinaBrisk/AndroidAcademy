@@ -2,6 +2,7 @@ package ru.androidacademy.msk.NewsApp.ui.adapter;
 
 import android.content.Context;
 import android.graphics.drawable.Drawable;
+import android.graphics.drawable.Icon;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -23,8 +24,10 @@ import java.util.List;
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.recyclerview.widget.RecyclerView;
+import okhttp3.internal.Util;
 import ru.androidacademy.msk.NewsApp.R;
 import ru.androidacademy.msk.NewsApp.Utils;
+import ru.androidacademy.msk.NewsApp.network.Multimedia;
 import ru.androidacademy.msk.NewsApp.network.NewsDTO;
 
 public class NewsRecyclerAdapter extends RecyclerView.Adapter<NewsRecyclerAdapter.ViewHolder> {
@@ -111,34 +114,44 @@ public class NewsRecyclerAdapter extends RecyclerView.Adapter<NewsRecyclerAdapte
             this.imageLoader = glideRequestManager;
         }
 
-        void bind(@NonNull NewsDTO newsItem) {
+        void bind(@NonNull NewsDTO newsDTO) {
 
-            imageLoader.load(newsItem.getUrl()).
-                    listener(new RequestListener<Drawable>() { //интерфейс для мониторинга статуса запроса, пока идет загрузка изображений
-                        @Override
-                        public boolean onLoadFailed(@Nullable GlideException e, Object model, Target<Drawable> target, boolean isFirstResource) {
-                            Utils.setVisible(imageView, false);
-                            return false;
-                        }
+            String url;
+            if((newsDTO.getMultimedia().size() != 0) && (newsDTO.getMultimedia() != null)) {
+                Multimedia multimedia = newsDTO.getMultimedia().get(0);
+                url = multimedia.getUrl();
 
-                        @Override
-                        public boolean onResourceReady(Drawable resource, Object model, Target<Drawable> target, DataSource dataSource, boolean isFirstResource) {
-                            return false;
-                        }
-                    })
-                    .apply(RequestOptions.diskCacheStrategyOf(DiskCacheStrategy.AUTOMATIC))
-                    .thumbnail(0.3f) //установка миниатюры, пока не загрузилось изображение. 0.3% от всего объема изображения - миниатюра
-                    .into(imageView);
+                imageLoader.load(url)
+                        .listener(new RequestListener<Drawable>() { //интерфейс для мониторинга статуса запроса, пока идет загрузка изображений
+                            @Override
+                            public boolean onLoadFailed(@Nullable GlideException e, Object model, Target<Drawable> target, boolean isFirstResource) {
+                                //Utils.setVisible(imageView, false);
+                                return false;
+                            }
 
-            if (newsItem.getCategory() == null || newsItem.getCategory().isEmpty()) {
-                Utils.setVisible(category, false);
-            } else {
-                category.setText(newsItem.getCategory());
+                            @Override
+                            public boolean onResourceReady(Drawable resource, Object model, Target<Drawable> target, DataSource dataSource, boolean isFirstResource) {
+                                return false;
+                            }
+                        })
+                        .apply(RequestOptions.diskCacheStrategyOf(DiskCacheStrategy.AUTOMATIC))
+                        .thumbnail(0.3f) //установка миниатюры, пока не загрузилось изображение. 0.3% от всего объема изображения - миниатюра
+                        .into(imageView);
+            }else{
+                Utils.setVisible(imageView, false);
             }
 
-            title.setText(newsItem.getTitle());
-            previewText.setText(newsItem.getPreviewText());
-            publishedData.setText(Utils.FormatDateTime(itemView.getContext(), newsItem.getPublishedDate()));
+           // imageView.setImageResource(R.drawable.photo);
+
+            if (newsDTO.getCategory() == null || newsDTO.getCategory().isEmpty()) {
+                Utils.setVisible(category, false);
+            } else {
+                category.setText(newsDTO.getCategory());
+            }
+
+            title.setText(newsDTO.getTitle());
+            previewText.setText(newsDTO.getPreviewText());
+            publishedData.setText(Utils.FormatDateTime(itemView.getContext(), newsDTO.getPublishedDate()));
 
         }
     }

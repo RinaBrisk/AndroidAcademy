@@ -5,26 +5,32 @@
     android:layout_height="match_parent"
     android:background="@color/backgroundNewsList">
 
+    <androidx.appcompat.widget.Toolbar
+        android:id="@+id/toolbar"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:background="@color/colorPrimaryDark">
+
+        <Spinner
+            android:id="@+id/spinner"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:entries="@array/newsCategory">
+
+        </Spinner>
+
+    </androidx.appcompat.widget.Toolbar>
+
     <LinearLayout
+        android:layout_below="@id/toolbar"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:orientation="vertical">
 
-        <Button
-            android:id="@+id/btn_news_category"
-            android:layout_width="wrap_content"
-            android:layout_height="@dimen/category_btn_height"
-            android:background="@color/backgroundNewsList"
-            android:layout_marginStart="@dimen/marginStart_news_category"
-            android:layout_marginEnd="@dimen/marginEnd_news_category"
-            android:paddingStart="@dimen/paddingStart_news_category"
-            android:paddingEnd="@dimen/paddingEnd_news_category"
-            android:text="Home" />
-
         <androidx.recyclerview.widget.RecyclerView
             android:id="@+id/recycler_view"
             android:layout_width="match_parent"
-            android:layout_height="wrap_content"/>
+            android:layout_height="wrap_content" />
 
     </LinearLayout>
 

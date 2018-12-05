@@ -2,10 +2,11 @@ package ru.androidacademy.msk.NewsApp.network;
 
 import com.google.gson.annotations.SerializedName;
 
+import java.io.Serializable;
 import java.util.Date;
 import java.util.List;
 
-public class NewsDTO {
+public class NewsDTO implements Serializable {
 
     @SerializedName("section")
     private String section;
@@ -20,7 +21,7 @@ public class NewsDTO {
     @SerializedName("published_date")
     private Date publishedDate;
     @SerializedName("multimedia")
-    private List<Object> multimedia = null;
+    private List<Multimedia> multimedia;
 
     @SerializedName("section")
     public String getSection() {
@@ -53,7 +54,7 @@ public class NewsDTO {
     }
 
     @SerializedName("multimedia")
-    public List<Object> getMultimedia() {
+    public List<Multimedia> getMultimedia() {
         return multimedia;
     }
 

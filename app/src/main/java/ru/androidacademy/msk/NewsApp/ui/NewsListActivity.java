@@ -1,15 +1,17 @@
 package ru.androidacademy.msk.NewsApp.ui;
 
-import android.content.Context;
-import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.res.Configuration;
 import android.os.Bundle;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
+import android.widget.AdapterView;
+import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.ProgressBar;
+import android.widget.Spinner;
+import android.widget.Toast;
 
 import com.bumptech.glide.Glide;
 
@@ -18,8 +20,8 @@ import java.util.List;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
-import androidx.appcompat.app.AlertDialog;
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.appcompat.widget.Toolbar;
 import androidx.recyclerview.widget.GridLayoutManager;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
@@ -42,7 +44,6 @@ public class NewsListActivity extends AppCompatActivity {
     private static final int LAYOUT = R.layout.activity_news_list;
 
     private static String sectionSearch = "home";
-    private static  int chosenCategory = 0;
 
     private NewsRecyclerAdapter newsRecyclerAdapter;
     private RecyclerView recyclerView;
@@ -52,7 +53,8 @@ public class NewsListActivity extends AppCompatActivity {
     private View networkError;
     private Button btnRepeat;
     private ProgressBar progressBar;
-    private Button btnNewsCategory;
+    private Spinner spinner;
+    private Toolbar toolbar;
 
     private final OnItemClickListener clickListener = newsDTO -> NewsDetailsActivity.startActivity(NewsListActivity.this, newsDTO);
 
@@ -63,8 +65,31 @@ public class NewsListActivity extends AppCompatActivity {
 
         findViews();
         btnRepeatSetListener();
-        btnNewsCategoryListener();
         setUpRecyclerViewAdapter();
+
+        setSupportActionBar(toolbar);
+
+
+        ArrayAdapter<?> adapter =
+                ArrayAdapter.createFromResource(this, R.array.newsCategory, android.R.layout.simple_spinner_item);
+        adapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
+        spinner.setAdapter(adapter);
+
+        spinner.setSelection(0);
+
+        spinner.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
+            @Override
+            public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
+                sectionSearch = spinner.getSelectedItem().toString();
+                loadNews(sectionSearch);
+            }
+
+            @Override
+            public void onNothingSelected(AdapterView<?> parent) {
+            }
+        });
+
+
     }
 
     public void setUpRecyclerViewAdapter(){
@@ -92,16 +117,6 @@ public class NewsListActivity extends AppCompatActivity {
         });
     }
 
-    public void btnNewsCategoryListener(){
-
-
-        btnNewsCategory.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                /*DialogNewsCategory.*/onCreateAlertDialog();
-            }
-        });
-    }
 
     @Override
     public void onStart() {
@@ -179,7 +194,6 @@ public class NewsListActivity extends AppCompatActivity {
 
                 networkError.setVisibility(View.VISIBLE);
                 progressBar.setVisibility(View.GONE);
-                btnNewsCategory.setVisibility(View.GONE);
                 return;
             }
             case Repeat:{
@@ -191,7 +205,6 @@ public class NewsListActivity extends AppCompatActivity {
             case HasData:{
 
                 progressBar.setVisibility(View.INVISIBLE);
-                btnNewsCategory.setVisibility(View.VISIBLE);
                 networkError.setVisibility(View.GONE);
                 recyclerView.setVisibility(View.VISIBLE);
                 return;
@@ -199,7 +212,6 @@ public class NewsListActivity extends AppCompatActivity {
             case LoadNews:{
 
                 progressBar.setVisibility(View.VISIBLE);
-                btnNewsCategory.setVisibility(View.INVISIBLE);
                 recyclerView.setVisibility(View.INVISIBLE);
             }
         }
@@ -211,10 +223,11 @@ public class NewsListActivity extends AppCompatActivity {
         networkError = findViewById(R.id.network_error);
         btnRepeat = findViewById(R.id.btn_repeat);
         progressBar = findViewById(R.id.progress_bar);
-        btnNewsCategory = findViewById(R.id.btn_news_category);
+        spinner = findViewById(R.id.spinner);
+        toolbar = findViewById(R.id.toolbar);
     }
 
-    public void onCreateAlertDialog() {
+   /* public void onCreateAlertDialog() {
 
         final String[] categoriesInDialog = {"Home", "World", "National", "Politics", "Business", "Technology", "Science",
                 "Health", "Sports", "Arts", "Books", "Movies", "Theater"};
@@ -227,7 +240,6 @@ public class NewsListActivity extends AppCompatActivity {
             public void onClick(DialogInterface dialog, int which) {
 
                 chosenCategory = which;
-                btnNewsCategory.setText(categoriesInDialog[chosenCategory]);
                 loadNews(categoriesInRequest[chosenCategory]);
                 dialog.dismiss();
             }
@@ -235,6 +247,6 @@ public class NewsListActivity extends AppCompatActivity {
 
         AlertDialog alert = builder.create();
         alert.show();
-    }
+    }*/
 }
 

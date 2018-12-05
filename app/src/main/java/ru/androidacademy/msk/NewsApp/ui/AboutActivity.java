@@ -5,6 +5,7 @@ import android.content.Intent;
 import android.net.Uri;
 import android.os.Bundle;
 import android.view.Gravity;
+import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
@@ -12,6 +13,8 @@ import android.widget.LinearLayout;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import androidx.annotation.NonNull;
+import androidx.appcompat.app.ActionBar;
 import androidx.appcompat.app.AppCompatActivity;
 import ru.androidacademy.msk.NewsApp.R;
 
@@ -72,6 +75,11 @@ public class AboutActivity extends AppCompatActivity {
                 ViewGroup.LayoutParams.WRAP_CONTENT)));
         disclaimer.setGravity(Gravity.CENTER_HORIZONTAL);
         ((LinearLayout) linear_layout).addView(disclaimer);
+
+        ActionBar actionBar = getSupportActionBar();
+        if (actionBar != null) {
+            actionBar.setDisplayHomeAsUpEnabled(true);
+        }
     }
 
     private void sendMessage(String message){
@@ -109,5 +117,16 @@ public class AboutActivity extends AppCompatActivity {
         Uri address = Uri.parse(TG_URL);
         Intent open_link = new Intent(Intent.ACTION_VIEW,address);
         startActivity(open_link);
+    }
+
+    @Override
+    public boolean onOptionsItemSelected(@NonNull MenuItem item) {
+        switch (item.getItemId()) {
+            case android.R.id.home:
+                startActivity(new Intent(this, NewsListActivity.class));
+                return true;
+            default:
+                return super.onOptionsItemSelected(item);
+        }
     }
 }

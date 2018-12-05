@@ -3,16 +3,10 @@ package ru.androidacademy.msk.NewsApp.ui;
 import android.annotation.SuppressLint;
 import android.content.Context;
 import android.content.Intent;
+import android.net.Uri;
 import android.os.Bundle;
 import android.view.MenuItem;
 import android.webkit.WebView;
-import android.widget.ImageView;
-import android.widget.TextView;
-import com.bumptech.glide.Glide;
-
-import java.io.Serializable;
-import java.text.SimpleDateFormat;
-import java.util.Locale;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
@@ -27,11 +21,12 @@ public class NewsDetailsActivity extends AppCompatActivity {
     private static final int LAYOUT = R.layout.activity_news_details;
 
     private WebView webView;
+
     private NewsDTO newsDTO;
 
     public static void startActivity(@NonNull Context context, @NonNull NewsDTO newsDTO) {
         Intent intent = new Intent(context, NewsDetailsActivity.class);
-        intent.putExtra(KEY_NEWS_ITEM, (Serializable) newsDTO);
+        intent.putExtra(KEY_NEWS_ITEM, newsDTO);
         context.startActivity(intent);
     }
 
@@ -41,7 +36,7 @@ public class NewsDetailsActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(LAYOUT);
 
-        newsDTO = getIntent().getStringExtra(KEY_NEWS_ITEM);
+        newsDTO = (NewsDTO) getIntent().getSerializableExtra(KEY_NEWS_ITEM);
 
         webView = findViewById(R.id.webView);
 
@@ -49,15 +44,19 @@ public class NewsDetailsActivity extends AppCompatActivity {
         /*JavaScript по умолчанию выключен в Webview.
         Следовательно, веб-страницы, содержащие JavaScript
         не будут работать должным образом.*/
+
         webView.getSettings().setJavaScriptEnabled(true);
 
         // указываем страницу загрузки
-        webView.loadUrl(detailsUrl);
 
+        if(Uri.parse(newsDTO.getUrl()).getHost().length() == 0) {
+            return;
+        }
+        webView.loadUrl(newsDTO.getUrl());
 
         ActionBar actionBar = getSupportActionBar();
         if (actionBar != null) {
-       //     actionBar.setTitle(newsItem.getCategory().getName());
+            actionBar.setTitle(newsDTO.getCategory());
             actionBar.setDisplayHomeAsUpEnabled(true);
         }
     }

@@ -45,12 +45,12 @@ public final class RestApi { // наследование не желательн
     @NonNull
     private OkHttpClient buildOkHttpClient(){
 
-       // final HttpLoggingInterceptor loggingInterceptor = new HttpLoggingInterceptor();
-       // loggingInterceptor.setLevel(HttpLoggingInterceptor.Level.BODY);
+        final HttpLoggingInterceptor loggingInterceptor = new HttpLoggingInterceptor();
+        loggingInterceptor.setLevel(HttpLoggingInterceptor.Level.BODY);
 
         return new OkHttpClient.Builder()
                 .connectTimeout(TIMEOUT_IN_SECONDS, TimeUnit.SECONDS)
-              //  .addInterceptor(loggingInterceptor)
+                .addInterceptor(loggingInterceptor)
                 .addInterceptor(ApiKeyInterceptor.create())
                 .build();
     }
