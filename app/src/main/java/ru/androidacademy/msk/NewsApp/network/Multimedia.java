@@ -1,6 +1,8 @@
 package ru.androidacademy.msk.NewsApp.network;
 
-public class Multimedia {
+import java.io.Serializable;
+
+public class Multimedia implements Serializable {
 
     private String url;
 

@@ -7,24 +7,25 @@
 
     <androidx.appcompat.widget.Toolbar
         android:id="@+id/toolbar"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
+        android:layout_width="match_parent"
+        android:layout_height="?android:actionBarSize"
         android:background="@color/colorPrimaryDark">
 
         <Spinner
             android:id="@+id/spinner"
-            android:layout_width="match_parent"
+            android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:entries="@array/newsCategory">
+            android:entries="@array/newsCategory"
+            android:visibility="visible">
 
         </Spinner>
 
     </androidx.appcompat.widget.Toolbar>
 
     <LinearLayout
-        android:layout_below="@id/toolbar"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
+        android:layout_below="@id/toolbar"
         android:orientation="vertical">
 
         <androidx.recyclerview.widget.RecyclerView
@@ -51,7 +52,7 @@
 
             <TextView
                 android:id="@+id/tv_network_error"
-                android:layout_width="match_parent"
+                android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_gravity="center"
                 android:text="@string/tv_network_error"

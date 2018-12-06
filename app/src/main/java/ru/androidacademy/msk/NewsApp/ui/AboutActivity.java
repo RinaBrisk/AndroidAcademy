@@ -1,6 +1,5 @@
 package ru.androidacademy.msk.NewsApp.ui;
 
-import android.app.Activity;
 import android.content.Intent;
 import android.net.Uri;
 import android.os.Bundle;
@@ -16,6 +15,7 @@ import android.widget.Toast;
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.ActionBar;
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.appcompat.widget.Toolbar;
 import ru.androidacademy.msk.NewsApp.R;
 
 public class AboutActivity extends AppCompatActivity {
@@ -24,11 +24,15 @@ public class AboutActivity extends AppCompatActivity {
     private static final String GIT_URL = "https://github.com/RinaBrisk";
     private static final String TG_URL = "https://web.telegram.org/#/im";
 
+    private Toolbar toolbar;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_about);
+
+        toolbar = findViewById(R.id.toolbar);
+        setSupportActionBar(toolbar);
 
         Button btn_vk = findViewById(R.id.btn_vk);
         btn_vk.setOnClickListener(new View.OnClickListener() {

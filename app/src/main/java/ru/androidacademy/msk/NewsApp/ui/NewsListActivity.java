@@ -11,7 +11,6 @@ import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.ProgressBar;
 import android.widget.Spinner;
-import android.widget.Toast;
 
 import com.bumptech.glide.Glide;
 
@@ -47,6 +46,7 @@ public class NewsListActivity extends AppCompatActivity {
 
     private NewsRecyclerAdapter newsRecyclerAdapter;
     private RecyclerView recyclerView;
+    private  RecyclerView.LayoutManager layoutManager;
     @Nullable
     public Call<DefaultResponse<List<NewsDTO>>> searchRequest;
 
@@ -62,34 +62,14 @@ public class NewsListActivity extends AppCompatActivity {
     public void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(LAYOUT);
-
         findViews();
-        btnRepeatSetListener();
-        setUpRecyclerViewAdapter();
 
+        toolbar.setTitle("");
         setSupportActionBar(toolbar);
 
-
-        ArrayAdapter<?> adapter =
-                ArrayAdapter.createFromResource(this, R.array.newsCategory, android.R.layout.simple_spinner_item);
-        adapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
-        spinner.setAdapter(adapter);
-
-        spinner.setSelection(0);
-
-        spinner.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
-            @Override
-            public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
-                sectionSearch = spinner.getSelectedItem().toString();
-                loadNews(sectionSearch);
-            }
-
-            @Override
-            public void onNothingSelected(AdapterView<?> parent) {
-            }
-        });
-
-
+        btnRepeatSetListener();
+        setUpRecyclerViewAdapter();
+        createSpinner();
     }
 
     public void setUpRecyclerViewAdapter(){
@@ -97,7 +77,6 @@ public class NewsListActivity extends AppCompatActivity {
         newsRecyclerAdapter = new NewsRecyclerAdapter(this, clickListener, Glide.with(this));
         recyclerView.setAdapter(newsRecyclerAdapter);
 
-        RecyclerView.LayoutManager layoutManager;
         if (getResources().getConfiguration().orientation == Configuration.ORIENTATION_PORTRAIT) {
             layoutManager = new LinearLayoutManager(this);
         } else {
@@ -117,6 +96,36 @@ public class NewsListActivity extends AppCompatActivity {
         });
     }
 
+    public void createSpinner(){
+
+        final String[] categoriesInRequest = {"home", "world", "national", "politics", "business", "technology", "science",
+                "health", "sports", "arts", "books", "movies", "theater"};
+
+        ArrayAdapter<?> adapter =
+                ArrayAdapter.createFromResource(this, R.array.newsCategory, android.R.layout.simple_spinner_item);
+        // simple_spinner_item - шаблон для представления одного элемента списка
+        adapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
+        // simple_spinner_dropdown_item - шаблон для представления раскрывающегося списка
+        spinner.setAdapter(adapter);
+        spinner.setSelection(0);
+
+        spinner.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
+
+            @Override
+            public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
+                int selectedPosition = spinner.getSelectedItemPosition();
+                sectionSearch = categoriesInRequest[selectedPosition];
+                loadNews(sectionSearch);
+            }
+
+            @Override
+            public void onNothingSelected(AdapterView<?> parent) {
+
+            }
+
+        });
+    }
+
 
     @Override
     public void onStart() {
@@ -131,7 +140,7 @@ public class NewsListActivity extends AppCompatActivity {
 
     @Override
     public boolean onCreateOptionsMenu(@NonNull Menu menu) {
-        getMenuInflater().inflate(R.menu.menu_list, menu);
+        getMenuInflater().inflate(R.menu.menu_about, menu);
         return true;
     }
 
@@ -158,8 +167,8 @@ public class NewsListActivity extends AppCompatActivity {
             @Override
             public void onResponse(@NonNull Call<DefaultResponse<List<NewsDTO>>> call,
                                    @NonNull Response<DefaultResponse<List<NewsDTO>>> response) {
-                showState(State.HasData);
                 checkResponseAndSetState(response);
+                showState(State.HasData);
             }
             
             @Override
@@ -178,6 +187,7 @@ public class NewsListActivity extends AppCompatActivity {
         if(body != null){
             final List<NewsDTO> data =  body.getResults();
             newsRecyclerAdapter.replaceItems(data);
+            layoutManager.scrollToPosition(0);
         }
     }
 
