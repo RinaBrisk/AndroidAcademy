@@ -59,7 +59,7 @@
                 android:id="@+id/heading_image"
                 android:layout_gravity="top"
                 android:layout_height="@dimen/heading_image"
-                android:layout_marginStart="@dimen/marginStart_headingImage"
+                android:layout_marginStart="@dimen/marginStart_heading_image"
                 android:layout_weight="1"
                 android:layout_width="@dimen/heading_image"
                 android:scaleType="centerCrop"
@@ -71,7 +71,7 @@
             android:id="@+id/tv_published_data"
             android:layout_height="wrap_content"
             android:layout_width="match_parent"
-            android:paddingTop="@dimen/paddingTop_publishedData"
+            android:paddingTop="@dimen/paddingTop_published_data"
             android:text="@string/published_data"
             android:textColor="@android:color/darker_gray"
             android:textSize="@dimen/textSize_published_data" />

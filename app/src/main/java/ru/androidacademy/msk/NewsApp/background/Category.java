@@ -1,6 +1,6 @@
-package ru.androidacademy.msk.NewsApp;
+package ru.androidacademy.msk.NewsApp.background;
 
-import java.io.Serializable;
+/*import java.io.Serializable;
 
 public class Category implements Serializable {
     private final int id;
@@ -20,3 +20,4 @@ public class Category implements Serializable {
     }
 }
 
+*/

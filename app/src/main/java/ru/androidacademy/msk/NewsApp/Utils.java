@@ -1,28 +1,38 @@
 package ru.androidacademy.msk.NewsApp;
 
-import android.util.Log;
+import android.content.Context;
+import android.provider.ContactsContract;
+import android.text.format.DateUtils;
 import android.view.View;
+
+import java.util.Date;
 
 import androidx.annotation.Nullable;
 
 public class Utils {
 
-    public static void setVisible(@Nullable View view, boolean isVisible){
+    public static CharSequence FormatDateTime (Context context, Date date){
 
-        int visibility = isVisible ? View.VISIBLE : View.GONE;
-        if(view != null) {
-            view.setVisibility(visibility);
-        }
+        return DateUtils.getRelativeDateTimeString( // возвращает дату в формате "[relative time/date], [time]"
+                // показывает разницу во времени между введенной датой и настоящим временем
+                context,
+                date.getTime(),
+                DateUtils.MINUTE_IN_MILLIS, //мин.разница в часах. Например 23 сек назад будут показаны как "0 минут назад",
+                DateUtils.WEEK_IN_MILLIS,// еденица времени по прошествии которого прекращается отчетность
+                DateUtils.FORMAT_ABBREV_RELATIVE //будет показывать в виде  "42 mins ago".
+        );
     }
 
-    public static void imitateLoading(int howLongToWait){
+    public static void setVisible(@Nullable View view, Boolean isVisible){
+        if(view == null)
+            return;
 
-        try {
-            Thread.sleep(howLongToWait);
-        } catch (InterruptedException e) {
-            if(BuildConfig.DEBUG){
-                Log.e("Utils", e.getMessage(), e);
-            }
+        if(isVisible){
+            view.setVisibility(View.GONE);
+        }
+
+        if(!isVisible){
+            view.setVisibility(View.GONE);
         }
     }
 }

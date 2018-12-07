@@ -13,9 +13,31 @@
     <string name="chooser">Email apps</string>
     <string name="toast">Choose app…</string>
     <string name="about">About</string>
-    <string name="title">Title</string>
-    <string name="category">Category</string>
-    <string name="preview_text">Preview text\n…\n…\n…</string>
-    <string name="published_data">Published data</string>
-    <string name="full_text">Full text\n...\n...\n...\n...\n...</string>
+    <string name="title" translatable="false">Title</string>
+    <string name="category" translatable="false">Category</string>
+    <string name="preview_text" translatable="false">Preview text\n…\n…\n…</string>
+    <string name="published_data" translatable="false">Published data</string>
+    <string name="full_text" translatable="false">Full text\n...\n...\n...\n...\n...</string>
+    <string name="tv_network_error">Network error</string>
+    <string name="btn_repeat">Repeat</string>
+    <string name="category_home">Home</string>
+
+    <string-array name="newsCategory">
+
+        <item>Home</item>
+        <item>World</item>
+        <item>National</item>
+        <item>Politics</item>
+        <item>Business</item>
+        <item>Technology</item>
+        <item>Science</item>
+        <item>Health</item>
+        <item>Sports</item>
+        <item>Arts</item>
+        <item>Books</item>
+        <item>Movies</item>
+        <item>Theater</item>
+
+    </string-array>
+
 </resources>

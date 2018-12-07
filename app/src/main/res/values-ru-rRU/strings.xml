@@ -12,4 +12,6 @@
     <string name="chooser">Почтовые приложения</string>
     <string name="toast">Выберите приложение…</string>
     <string name="about">О разработчике</string>
+    <string name="tv_network_error">Сетевая ошибка</string>
+    <string name="btn_repeat">Повторить </string>
 </resources>

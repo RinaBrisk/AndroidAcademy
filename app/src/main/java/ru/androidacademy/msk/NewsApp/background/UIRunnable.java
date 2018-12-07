@@ -1,10 +1,11 @@
-package ru.androidacademy.msk.NewsApp;
+package ru.androidacademy.msk.NewsApp.background;
 
-import java.lang.ref.WeakReference;
-import java.security.acl.LastOwnerException;
+/*import java.lang.ref.WeakReference;
 import java.util.List;
 
 import androidx.annotation.NonNull;
+import ru.androidacademy.msk.NewsApp.network.NewsDTO;
+import ru.androidacademy.msk.NewsApp.ui.adapter.NewsRecyclerAdapter;
 
 public class UIRunnable implements Runnable {
 
@@ -15,7 +16,7 @@ public class UIRunnable implements Runnable {
     @NonNull
     private final WeakReference<LoadingData> loadingDataRef;
 
-    public UIRunnable(@NonNull List<NewsItem> news, @NonNull WeakReference<NewsRecyclerAdapter> newsRecyclerAdapter, LoadingData loadingData) {
+    public UIRunnable(@NonNull List<NewsDTO> news, @NonNull WeakReference<NewsRecyclerAdapter> newsRecyclerAdapter, LoadingData loadingData) {
 
         this.newsRef = new WeakReference<>(news);
         this.newsRecyclerAdapterRef = newsRecyclerAdapter;
@@ -30,3 +31,4 @@ public class UIRunnable implements Runnable {
         loadingDataRef.get().showProgress(false);
     }
 }
+*/

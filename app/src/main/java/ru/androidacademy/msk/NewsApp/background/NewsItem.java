@@ -1,7 +1,9 @@
-package ru.androidacademy.msk.NewsApp;
+package ru.androidacademy.msk.NewsApp.background;
 
-import java.io.Serializable;
+/*import java.io.Serializable;
 import java.util.Date;
+
+import ru.androidacademy.msk.NewsApp.background.Category;
 
 public class NewsItem implements Serializable {
 
@@ -45,5 +47,5 @@ public class NewsItem implements Serializable {
         return fullText;
     }
 }
-
+*/
 

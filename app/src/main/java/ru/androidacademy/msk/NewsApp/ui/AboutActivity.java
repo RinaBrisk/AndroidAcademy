@@ -1,10 +1,10 @@
-package ru.androidacademy.msk.NewsApp;
+package ru.androidacademy.msk.NewsApp.ui;
 
-import android.app.Activity;
 import android.content.Intent;
 import android.net.Uri;
 import android.os.Bundle;
 import android.view.Gravity;
+import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
@@ -12,7 +12,13 @@ import android.widget.LinearLayout;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import java.util.Objects;
+
+import androidx.annotation.NonNull;
+import androidx.appcompat.app.ActionBar;
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.appcompat.widget.Toolbar;
+import ru.androidacademy.msk.NewsApp.R;
 
 public class AboutActivity extends AppCompatActivity {
 
@@ -20,11 +26,18 @@ public class AboutActivity extends AppCompatActivity {
     private static final String GIT_URL = "https://github.com/RinaBrisk";
     private static final String TG_URL = "https://web.telegram.org/#/im";
 
+    private static final int LAYOUT = R.layout.activity_about;
+
+    private Toolbar toolbar;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_about);
+        setContentView(LAYOUT);
+
+        toolbar = findViewById(R.id.toolbar);
+        setSupportActionBar(toolbar);
+        Objects.requireNonNull(getSupportActionBar()).setDisplayHomeAsUpEnabled(true);
 
         Button btn_vk = findViewById(R.id.btn_vk);
         btn_vk.setOnClickListener(new View.OnClickListener() {
@@ -71,6 +84,11 @@ public class AboutActivity extends AppCompatActivity {
                 ViewGroup.LayoutParams.WRAP_CONTENT)));
         disclaimer.setGravity(Gravity.CENTER_HORIZONTAL);
         ((LinearLayout) linear_layout).addView(disclaimer);
+
+        ActionBar actionBar = getSupportActionBar();
+        if (actionBar != null) {
+            actionBar.setDisplayHomeAsUpEnabled(true);
+        }
     }
 
     private void sendMessage(String message){
@@ -108,5 +126,16 @@ public class AboutActivity extends AppCompatActivity {
         Uri address = Uri.parse(TG_URL);
         Intent open_link = new Intent(Intent.ACTION_VIEW,address);
         startActivity(open_link);
+    }
+
+    @Override
+    public boolean onOptionsItemSelected(@NonNull MenuItem item) {
+        switch (item.getItemId()) {
+            case android.R.id.home:
+                startActivity(new Intent(this, NewsListActivity.class));
+                return true;
+            default:
+                return super.onOptionsItemSelected(item);
+        }
     }
 }
