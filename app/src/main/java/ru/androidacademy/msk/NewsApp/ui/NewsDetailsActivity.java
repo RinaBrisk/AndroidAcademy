@@ -3,14 +3,15 @@ package ru.androidacademy.msk.NewsApp.ui;
 import android.annotation.SuppressLint;
 import android.content.Context;
 import android.content.Intent;
-import android.graphics.Bitmap;
 import android.net.Uri;
 import android.os.Bundle;
 import android.view.MenuItem;
 import android.view.View;
+import android.webkit.WebChromeClient;
 import android.webkit.WebView;
 import android.webkit.WebViewClient;
-import android.widget.ProgressBar;
+
+import java.util.Objects;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
@@ -45,6 +46,7 @@ public class NewsDetailsActivity extends AppCompatActivity {
 
         toolbar = findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
+        Objects.requireNonNull(getSupportActionBar()).setDisplayHomeAsUpEnabled(true);
 
         newsDTO = (NewsDTO) getIntent().getSerializableExtra(KEY_NEWS_ITEM);
         webView = findViewById(R.id.webView);
@@ -56,22 +58,35 @@ public class NewsDetailsActivity extends AppCompatActivity {
         webView.getSettings().setJavaScriptEnabled(true);
 
         // указываем страницу загрузки
-        if(Uri.parse(newsDTO.getUrl()).getHost().length() == 0) {
+        if (Uri.parse(newsDTO.getUrl()).getHost().length() == 0) {
             return;
         }
 
         webView.setWebViewClient(new WebViewClient());
         webView.loadUrl(newsDTO.getUrl());
 
-        webView.setWebViewClient(new WebViewClient(){
+        webView.setWebChromeClient(new WebChromeClient() {
 
-            @Override
-            public void onPageFinished(WebView view, String url)
+            public void onProgressChanged(WebView view, int progress)
             {
-                super.onPageFinished(view, url);
-                progressBar.setVisibility(View.INVISIBLE);
+                if(webView.getProgress() == 100){
+                    //тут получается задержка во времени, и состояние прогресса == 100 происходит
+                    // несколько раз, так как некоторые данные догружаются
+                    progressBar.setVisibility(View.INVISIBLE);
+                }
             }
         });
+
+
+//        webView.setWebViewClient(new WebViewClient(){
+//
+//            @Override
+//            public void onPageFinished(WebView view, String url)
+//            {
+//                super.onPageFinished(view, url);
+//                progressBar.setVisibility(View.INVISIBLE);
+//            }
+//        });
     }
 
     @Override

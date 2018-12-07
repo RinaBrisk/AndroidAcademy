@@ -12,6 +12,8 @@ import android.widget.LinearLayout;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import java.util.Objects;
+
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.ActionBar;
 import androidx.appcompat.app.AppCompatActivity;
@@ -24,15 +26,18 @@ public class AboutActivity extends AppCompatActivity {
     private static final String GIT_URL = "https://github.com/RinaBrisk";
     private static final String TG_URL = "https://web.telegram.org/#/im";
 
+    private static final int LAYOUT = R.layout.activity_about;
+
     private Toolbar toolbar;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_about);
+        setContentView(LAYOUT);
 
         toolbar = findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
+        Objects.requireNonNull(getSupportActionBar()).setDisplayHomeAsUpEnabled(true);
 
         Button btn_vk = findViewById(R.id.btn_vk);
         btn_vk.setOnClickListener(new View.OnClickListener() {

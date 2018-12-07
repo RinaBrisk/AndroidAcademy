@@ -21,7 +21,8 @@
     <dimen name="marginStart_news_category">4dp</dimen>
     <dimen name="marginEnd_news_category">4dp</dimen>
     <dimen name="photo">200dp</dimen>
-    <dimen name="photo_land">230dp</dimen>
+    <dimen name="photo_land_width">230dp</dimen>
+    <dimen name="photo_land_height">350dp</dimen>
     <dimen name="paddingEnd_about">8dp</dimen>
     <dimen name="paddingStart_about">32dp</dimen>
     <dimen name="paddingStart_land_about">24dp</dimen>
