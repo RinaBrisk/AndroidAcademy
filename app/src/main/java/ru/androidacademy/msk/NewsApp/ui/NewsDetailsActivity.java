@@ -59,11 +59,9 @@ public class NewsDetailsActivity extends AppCompatActivity {
         if(Uri.parse(newsDTO.getUrl()).getHost().length() == 0) {
             return;
         }
-        progressBar.setVisibility(View.VISIBLE);
 
         webView.setWebViewClient(new WebViewClient());
         webView.loadUrl(newsDTO.getUrl());
-        progressBar.setVisibility(View.INVISIBLE);
 
         webView.setWebViewClient(new WebViewClient(){
 
@@ -74,7 +72,6 @@ public class NewsDetailsActivity extends AppCompatActivity {
                 progressBar.setVisibility(View.INVISIBLE);
             }
         });
-
     }
 
     @Override
