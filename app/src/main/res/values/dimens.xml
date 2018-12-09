@@ -20,9 +20,12 @@
     <dimen name="marginTop_full_text_details">8dp</dimen>
     <dimen name="marginStart_news_category">4dp</dimen>
     <dimen name="marginEnd_news_category">4dp</dimen>
+    <dimen name="marginTop_intro_image">40dp</dimen>
+    <dimen name="marginTop_intro_text">40dp</dimen>
     <dimen name="photo">200dp</dimen>
     <dimen name="photo_land_width">230dp</dimen>
     <dimen name="photo_land_height">350dp</dimen>
+    <dimen name="image_intro_height">400dp</dimen>
     <dimen name="paddingEnd_about">8dp</dimen>
     <dimen name="paddingStart_about">32dp</dimen>
     <dimen name="paddingStart_land_about">24dp</dimen>
@@ -43,5 +46,6 @@
     <dimen name="textSize_published_data">10sp</dimen>
     <dimen name="textSize_disclaimer">12sp</dimen>
     <dimen name="textSize_network_error">18sp</dimen>
+    <dimen name="textSize_intro">32sp</dimen>
 
 </resources>
