@@ -24,6 +24,10 @@ import androidx.appcompat.widget.Toolbar;
 import androidx.recyclerview.widget.GridLayoutManager;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
+import butterknife.BindInt;
+import butterknife.BindString;
+import butterknife.BindView;
+import butterknife.ButterKnife;
 import retrofit2.Call;
 import retrofit2.Callback;
 import retrofit2.Response;
@@ -37,24 +41,25 @@ import ru.androidacademy.msk.NewsApp.network.NewsDTO;
 
 import static ru.androidacademy.msk.NewsApp.ui.adapter.NewsRecyclerAdapter.*;
 
-
 public class NewsListActivity extends AppCompatActivity {
 
     private static final int LAYOUT = R.layout.activity_news_list;
-
-    private static String sectionSearch = "home";
+    private static final String API_KEY = "y8sH4kt9gZBVJyEoB2DvUHmHyT97zAih";
 
     private NewsRecyclerAdapter newsRecyclerAdapter;
-    private RecyclerView recyclerView;
     private  RecyclerView.LayoutManager layoutManager;
+
     @Nullable
     public Call<DefaultResponse<List<NewsDTO>>> searchRequest;
 
-    private View networkError;
-    private Button btnRepeat;
-    private ProgressBar progressBar;
-    private Spinner spinner;
-    private Toolbar toolbar;
+    @BindString(R.string.default_search) String sectionSearch;
+
+    @BindView(R.id.recycler_view) RecyclerView recyclerView;
+    @BindView(R.id.network_error) View networkError;
+    @BindView(R.id.btn_repeat)    Button btnRepeat;
+    @BindView(R.id.progress_bar)  ProgressBar progressBar;
+    @BindView(R.id.spinner)       Spinner spinner;
+    @BindView(R.id.toolbar)       Toolbar toolbar;
 
     private final OnItemClickListener clickListener = newsDTO -> NewsDetailsActivity.startActivity(NewsListActivity.this, newsDTO);
 
@@ -62,7 +67,8 @@ public class NewsListActivity extends AppCompatActivity {
     public void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(LAYOUT);
-        findViews();
+
+        ButterKnife.bind(this);
 
         toolbar.setTitle("");
         setSupportActionBar(toolbar);
@@ -159,7 +165,7 @@ public class NewsListActivity extends AppCompatActivity {
 
         searchRequest = RestApi.getInstance()
                 .getNewsEndpoint()
-                .search(category);
+                .search(category, API_KEY);
 
         showState(State.LoadNews);
 
@@ -225,16 +231,6 @@ public class NewsListActivity extends AppCompatActivity {
                 recyclerView.setVisibility(View.INVISIBLE);
             }
         }
-    }
-
-    public void findViews(){
-
-        recyclerView = findViewById(R.id.recycler_view);
-        networkError = findViewById(R.id.network_error);
-        btnRepeat = findViewById(R.id.btn_repeat);
-        progressBar = findViewById(R.id.progress_bar);
-        spinner = findViewById(R.id.spinner);
-        toolbar = findViewById(R.id.toolbar);
     }
 
    /* public void onCreateAlertDialog() {

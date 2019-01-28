@@ -51,7 +51,7 @@ public final class RestApi { // наследование не желательн
         return new OkHttpClient.Builder()
                 .connectTimeout(TIMEOUT_IN_SECONDS, TimeUnit.SECONDS)
                 .addInterceptor(loggingInterceptor)
-                .addInterceptor(ApiKeyInterceptor.create())
+               // .addInterceptor(ApiKeyInterceptor.create())
                 .build();
     }
 

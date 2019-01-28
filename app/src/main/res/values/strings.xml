@@ -22,6 +22,7 @@
     <string name="btn_repeat">Repeat</string>
     <string name="category_home">Home</string>
     <string name="welcome">Welcome!</string>
+    <string name="default_search">home</string>
 
     <string-array name="newsCategory">
 
