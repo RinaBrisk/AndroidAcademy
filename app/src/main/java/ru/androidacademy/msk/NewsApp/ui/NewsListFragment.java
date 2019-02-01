@@ -1,33 +1,34 @@
 package ru.androidacademy.msk.NewsApp.ui;
 
-import android.content.Intent;
 import android.content.res.Configuration;
 import android.os.Bundle;
-import android.view.Menu;
-import android.view.MenuItem;
+import android.view.LayoutInflater;
 import android.view.View;
+import android.view.ViewGroup;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
-import android.widget.Button;
 import android.widget.ProgressBar;
 import android.widget.Spinner;
+import android.widget.Toast;
 
 import com.bumptech.glide.Glide;
 
 import java.io.IOException;
 import java.util.List;
+import java.util.Objects;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
-import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.widget.Toolbar;
+import androidx.fragment.app.Fragment;
 import androidx.recyclerview.widget.GridLayoutManager;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
-import butterknife.BindInt;
 import butterknife.BindString;
 import butterknife.BindView;
 import butterknife.ButterKnife;
+import butterknife.OnClick;
+import butterknife.Unbinder;
 import retrofit2.Call;
 import retrofit2.Callback;
 import retrofit2.Response;
@@ -41,65 +42,78 @@ import ru.androidacademy.msk.NewsApp.network.NewsDTO;
 
 import static ru.androidacademy.msk.NewsApp.ui.adapter.NewsRecyclerAdapter.*;
 
-public class NewsListActivity extends AppCompatActivity {
-
-    private static final int LAYOUT = R.layout.activity_news_list;
-    private static final String API_KEY = "y8sH4kt9gZBVJyEoB2DvUHmHyT97zAih";
+public class NewsListFragment extends Fragment implements NewsRecyclerAdapter.onClickInterface{
 
     private NewsRecyclerAdapter newsRecyclerAdapter;
-    private  RecyclerView.LayoutManager layoutManager;
+    private RecyclerView.LayoutManager layoutManager;
+
+    private Unbinder unbinder;
 
     @Nullable
     public Call<DefaultResponse<List<NewsDTO>>> searchRequest;
+    private  static final int LAYOUT = R.layout.fragment_news_list;
 
     @BindString(R.string.default_search) String sectionSearch;
+    @BindString(R.string.api_key) String API_KEY;
 
     @BindView(R.id.recycler_view) RecyclerView recyclerView;
     @BindView(R.id.network_error) View networkError;
-    @BindView(R.id.btn_repeat)    Button btnRepeat;
     @BindView(R.id.progress_bar)  ProgressBar progressBar;
     @BindView(R.id.spinner)       Spinner spinner;
     @BindView(R.id.toolbar)       Toolbar toolbar;
 
-    private final OnItemClickListener clickListener = newsDTO -> NewsDetailsActivity.startActivity(NewsListActivity.this, newsDTO);
+    public static NewsListFragment newInstance() {
+        return new NewsListFragment();
+    }
 
     @Override
     public void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(LAYOUT);
+        //сделать то, что не связано с интерфейсом
+    }
 
-        ButterKnife.bind(this);
+    @Nullable
+    @Override
+    public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
+        View view = inflater.inflate(LAYOUT, container, false);
+        unbinder = ButterKnife.bind(this, view);
 
-        toolbar.setTitle("");
-        setSupportActionBar(toolbar);
-
-        btnRepeatSetListener();
         setUpRecyclerViewAdapter();
+        // toolbar.setTitle("");
+        // setSupportActionBar(toolbar);
+
         createSpinner();
+        return view;
     }
 
-    public void setUpRecyclerViewAdapter(){
-
-        newsRecyclerAdapter = new NewsRecyclerAdapter(this, clickListener, Glide.with(this));
-        recyclerView.setAdapter(newsRecyclerAdapter);
-
-        if (getResources().getConfiguration().orientation == Configuration.ORIENTATION_PORTRAIT) {
-            layoutManager = new LinearLayoutManager(this);
-        } else {
-            layoutManager = new GridLayoutManager(this, 2);;
-        }
-        recyclerView.setLayoutManager(layoutManager);
-        recyclerView.addItemDecoration(new DividerNewsItemDecoration(getResources().getDimensionPixelSize(R.dimen.divider_news_decoration)));
+    @Override
+    public void onActivityCreated(@Nullable Bundle savedInstanceState) {
+        super.onActivityCreated(savedInstanceState);
+        //вызывается, когда отработает метод активности onCreate(), а значит фрагмент может обратиться к компонентам активности
     }
 
-    public void btnRepeatSetListener(){
-        btnRepeat.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                loadNews(sectionSearch);
-                showState(State.Repeat);
-            }
-        });
+    @Override
+    public void onStart() {
+        super.onStart();
+        loadNews(sectionSearch);
+    }
+
+    @Override
+    public void onStop() {
+        super.onStop();
+    }
+
+    @Override
+    public void onDestroyView() {
+        super.onDestroyView();
+        unbinder.unbind();
+    }
+
+
+    @OnClick(R.id.btn_repeat)
+    public void onClickBtnRepeat(View v) {
+        loadNews(sectionSearch);
+        showState(State.Repeat);
     }
 
     public void createSpinner(){
@@ -108,7 +122,7 @@ public class NewsListActivity extends AppCompatActivity {
                 "health", "sports", "arts", "books", "movies", "theater"};
 
         ArrayAdapter<?> adapter =
-                ArrayAdapter.createFromResource(this, R.array.newsCategory, android.R.layout.simple_spinner_item);
+                ArrayAdapter.createFromResource(Objects.requireNonNull(getContext()), R.array.newsCategory, android.R.layout.simple_spinner_item);
         // simple_spinner_item - шаблон для представления одного элемента списка
         adapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
         // simple_spinner_dropdown_item - шаблон для представления раскрывающегося списка
@@ -123,42 +137,30 @@ public class NewsListActivity extends AppCompatActivity {
                 sectionSearch = categoriesInRequest[selectedPosition];
                 loadNews(sectionSearch);
             }
-
             @Override
             public void onNothingSelected(AdapterView<?> parent) {
-
             }
-
         });
     }
 
+    public void setUpRecyclerViewAdapter(){
 
-    @Override
-    public void onStart() {
-        super.onStart();
-        loadNews(sectionSearch);
-    }
+        newsRecyclerAdapter = new NewsRecyclerAdapter(Objects.requireNonNull(getActivity()), Glide.with(getActivity()));
+        newsRecyclerAdapter.setListener(this);
+        recyclerView.setAdapter(newsRecyclerAdapter);
 
-    @Override
-    public void onStop() {
-        super.onStop();
-    }
-
-    @Override
-    public boolean onCreateOptionsMenu(@NonNull Menu menu) {
-        getMenuInflater().inflate(R.menu.menu_about, menu);
-        return true;
-    }
-
-    @Override
-    public boolean onOptionsItemSelected(@NonNull MenuItem item) {
-        switch (item.getItemId()) {
-            case R.id.action_about:
-                startActivity(new Intent(this, AboutActivity.class));
-                return true;
-            default:
-                return super.onOptionsItemSelected(item);
+        if (getResources().getConfiguration().orientation == Configuration.ORIENTATION_PORTRAIT) {
+            layoutManager = new LinearLayoutManager(getActivity());
+        } else {
+            layoutManager = new GridLayoutManager(getActivity(), 2);;
         }
+        recyclerView.setLayoutManager(layoutManager);
+        recyclerView.addItemDecoration(new DividerNewsItemDecoration(getResources().getDimensionPixelSize(R.dimen.divider_news_decoration)));
+    }
+
+    @Override
+    public void clicked(@NonNull NewsDTO newsDTO) {
+        ((MainActivity)Objects.requireNonNull(getActivity())).showDetails(newsDTO);
     }
 
     public void loadNews(@NonNull String category) {
@@ -184,7 +186,6 @@ public class NewsListActivity extends AppCompatActivity {
             }
         });
     }
-
 
     private void checkResponseAndSetState(@NonNull Response<DefaultResponse<List<NewsDTO>>> response){
 
@@ -240,7 +241,7 @@ public class NewsListActivity extends AppCompatActivity {
         final String[] categoriesInRequest = {"home", "world", "national", "politics", "business", "technology", "science",
                 "health", "sports", "arts", "books", "movies", "theater"};
 
-        AlertDialog.Builder builder = new AlertDialog.Builder(NewsListActivity.this);
+        AlertDialog.Builder builder = new AlertDialog.Builder(NewsListFragment.this);
         builder.setSingleChoiceItems(categoriesInDialog,chosenCategory, new DialogInterface.OnClickListener() {
             @Override
             public void onClick(DialogInterface dialog, int which) {

@@ -36,16 +36,19 @@ public class NewsRecyclerAdapter extends RecyclerView.Adapter<NewsRecyclerAdapte
     private final List<NewsDTO> news = new ArrayList<>();
     @NonNull
     private final LayoutInflater inflater;
-    @NonNull
-    private final OnItemClickListener clickListener;
-
+    private onClickInterface clickListener;
     private RequestManager glideRequestManager;
 
+    public interface onClickInterface{
+        void clicked(NewsDTO newsDTO);
+    }
 
-    public NewsRecyclerAdapter(@NonNull Context context, @NonNull OnItemClickListener onItemClickListener, RequestManager glideRequestManager) {
+    public void setListener(onClickInterface listener) {
+        this.clickListener = listener;
+    }
 
+    public NewsRecyclerAdapter(@NonNull Context context, RequestManager glideRequestManager) {
         inflater = LayoutInflater.from(context);
-        this.clickListener = onItemClickListener;
         this.glideRequestManager = glideRequestManager;
     }
 
@@ -55,7 +58,7 @@ public class NewsRecyclerAdapter extends RecyclerView.Adapter<NewsRecyclerAdapte
         //int viewType - если в Recycler помещаются несколько типов элементов, например реклама
         //тогда реализуется метод GetItemViewType
         return new ViewHolder(
-                inflater.inflate(R.layout.news_item, viewGroup, false), clickListener, glideRequestManager);
+                inflater.inflate(R.layout.news_item, viewGroup, false), glideRequestManager);
         //xml элементы одной новости помещаются в ViewGroup
     }
 
@@ -78,10 +81,6 @@ public class NewsRecyclerAdapter extends RecyclerView.Adapter<NewsRecyclerAdapte
         notifyDataSetChanged();
     }
 
-    public interface OnItemClickListener {
-        void onItemClick(@NonNull NewsDTO newsDTO);
-    }
-
     class ViewHolder extends RecyclerView.ViewHolder {
 
         public final TextView category;
@@ -89,33 +88,31 @@ public class NewsRecyclerAdapter extends RecyclerView.Adapter<NewsRecyclerAdapte
         public final TextView previewText;
         public final ImageView imageView;
         public final TextView publishedData;
+        public final View view;
 
         private RequestManager imageLoader;
 
-        public ViewHolder(@NonNull View itemView, @Nullable final OnItemClickListener clickListener, @NonNull RequestManager glideRequestManager) {
+        public ViewHolder(@NonNull View itemView, @NonNull RequestManager glideRequestManager) {
             super(itemView);
-
-            itemView.setOnClickListener(newsDTO -> {
-                //прикрепляем к элементам listener, чтобы он срабатывал при нажатии
-                //а реализация onItemClick осуществляется в NewsListActivity
-                int position = getAdapterPosition();
-                //позиция List == AdapterPosition, а позиция на layout  может быть иной
-                if (clickListener != null && position != RecyclerView.NO_POSITION) {
-                    clickListener.onItemClick(news.get(position));
-                }
-            });
 
             category = this.itemView.findViewById(R.id.tv_category);
             title = this.itemView.findViewById(R.id.tv_title);
             previewText = this.itemView.findViewById(R.id.tv_preview_text);
             imageView = this.itemView.findViewById(R.id.heading_image);
             publishedData = this.itemView.findViewById(R.id.tv_published_data);
-
+            view = itemView;
             this.imageLoader = glideRequestManager;
         }
 
         void bind(@NonNull NewsDTO newsDTO) {
 
+            view.setOnClickListener(v -> {
+                int position = getAdapterPosition();
+                //позиция List == AdapterPosition, а позиция на layout  может быть иной
+                if (clickListener != null && position != RecyclerView.NO_POSITION) {
+                    clickListener.clicked(news.get(position));
+                }
+            });
             String url;
             if((newsDTO.getMultimedia().size() != 0) && (newsDTO.getMultimedia() != null)) {
                 Multimedia multimedia = newsDTO.getMultimedia().get(0);
@@ -125,7 +122,6 @@ public class NewsRecyclerAdapter extends RecyclerView.Adapter<NewsRecyclerAdapte
                         .listener(new RequestListener<Drawable>() { //интерфейс для мониторинга статуса запроса, пока идет загрузка изображений
                             @Override
                             public boolean onLoadFailed(@Nullable GlideException e, Object model, Target<Drawable> target, boolean isFirstResource) {
-                                //Utils.setVisible(imageView, false);
                                 return false;
                             }
 
@@ -141,8 +137,6 @@ public class NewsRecyclerAdapter extends RecyclerView.Adapter<NewsRecyclerAdapte
                 Utils.setVisible(imageView, false);
             }
 
-           // imageView.setImageResource(R.drawable.photo);
-
             if (newsDTO.getCategory() == null || newsDTO.getCategory().isEmpty()) {
                 Utils.setVisible(category, false);
             } else {
@@ -152,7 +146,6 @@ public class NewsRecyclerAdapter extends RecyclerView.Adapter<NewsRecyclerAdapte
             title.setText(newsDTO.getTitle());
             previewText.setText(newsDTO.getPreviewText());
             publishedData.setText(Utils.FormatDateTime(itemView.getContext(), newsDTO.getPublishedDate()));
-
         }
     }
 }

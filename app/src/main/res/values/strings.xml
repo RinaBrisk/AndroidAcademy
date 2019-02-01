@@ -23,6 +23,10 @@
     <string name="category_home">Home</string>
     <string name="welcome">Welcome!</string>
     <string name="default_search">home</string>
+    <string name="vk_url">"https://vk.com/sergeeva_rina7</string>
+    <string name="git_url">https://github.com/RinaBrisk</string>
+    <string name="tg_url">https://web.telegram.org/#/im</string>
+    <string name="api_key">y8sH4kt9gZBVJyEoB2DvUHmHyT97zAih</string>
 
     <string-array name="newsCategory">
 
