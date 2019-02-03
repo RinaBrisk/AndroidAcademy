@@ -59,8 +59,7 @@ public class NewsListFragment extends Fragment implements NewsRecyclerAdapter.on
     @BindView(R.id.recycler_view) RecyclerView recyclerView;
     @BindView(R.id.network_error) View networkError;
     @BindView(R.id.progress_bar)  ProgressBar progressBar;
-    @BindView(R.id.spinner)       Spinner spinner;
-    @BindView(R.id.toolbar)       Toolbar toolbar;
+    //@BindView(R.id.spinner)       Spinner spinner;
 
     public static NewsListFragment newInstance() {
         return new NewsListFragment();
@@ -79,10 +78,7 @@ public class NewsListFragment extends Fragment implements NewsRecyclerAdapter.on
         unbinder = ButterKnife.bind(this, view);
 
         setUpRecyclerViewAdapter();
-        // toolbar.setTitle("");
-        // setSupportActionBar(toolbar);
-
-        createSpinner();
+       // createSpinner();
         return view;
     }
 
@@ -116,32 +112,32 @@ public class NewsListFragment extends Fragment implements NewsRecyclerAdapter.on
         showState(State.Repeat);
     }
 
-    public void createSpinner(){
-
-        final String[] categoriesInRequest = {"home", "world", "national", "politics", "business", "technology", "science",
-                "health", "sports", "arts", "books", "movies", "theater"};
-
-        ArrayAdapter<?> adapter =
-                ArrayAdapter.createFromResource(Objects.requireNonNull(getContext()), R.array.newsCategory, android.R.layout.simple_spinner_item);
-        // simple_spinner_item - шаблон для представления одного элемента списка
-        adapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
-        // simple_spinner_dropdown_item - шаблон для представления раскрывающегося списка
-        spinner.setAdapter(adapter);
-        spinner.setSelection(0);
-
-        spinner.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
-
-            @Override
-            public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
-                int selectedPosition = spinner.getSelectedItemPosition();
-                sectionSearch = categoriesInRequest[selectedPosition];
-                loadNews(sectionSearch);
-            }
-            @Override
-            public void onNothingSelected(AdapterView<?> parent) {
-            }
-        });
-    }
+//    public void createSpinner(){
+////
+////        final String[] categoriesInRequest = {"home", "world", "national", "politics", "business", "technology", "science",
+////                "health", "sports", "arts", "books", "movies", "theater"};
+////
+////        ArrayAdapter<?> adapter =
+////                ArrayAdapter.createFromResource(Objects.requireNonNull(getContext()), R.array.newsCategory, android.R.layout.simple_spinner_item);
+////        // simple_spinner_item - шаблон для представления одного элемента списка
+////        adapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
+////        // simple_spinner_dropdown_item - шаблон для представления раскрывающегося списка
+////        spinner.setAdapter(adapter);
+////        spinner.setSelection(0);
+////
+////        spinner.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
+////
+////            @Override
+////            public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
+////                int selectedPosition = spinner.getSelectedItemPosition();
+////                sectionSearch = categoriesInRequest[selectedPosition];
+////                loadNews(sectionSearch);
+////            }
+////            @Override
+////            public void onNothingSelected(AdapterView<?> parent) {
+////            }
+////        });
+////    }
 
     public void setUpRecyclerViewAdapter(){
 

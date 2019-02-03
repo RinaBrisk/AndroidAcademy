@@ -31,7 +31,6 @@ public class NewsDetailsFragment extends Fragment implements FragmentInteraction
 
     @BindView(R.id.webView)      WebView webView;
     @BindView(R.id.progress_bar) View progressBar;
-    // private Toolbar toolbar;
 
     public static NewsDetailsFragment newInstance(NewsDTO news) {
         newsDTO = news;
@@ -47,10 +46,6 @@ public class NewsDetailsFragment extends Fragment implements FragmentInteraction
 
         return view;
     }
-
-    //toolbar = findViewById(R.id.toolbar);
-    // setSupportActionBar(toolbar);
-    // Objects.requireNonNull(getSupportActionBar()).setDisplayHomeAsUpEnabled(true);
 
     @Override
     public void onDestroyView() {

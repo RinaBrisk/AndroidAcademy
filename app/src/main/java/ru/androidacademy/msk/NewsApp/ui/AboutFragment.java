@@ -22,9 +22,10 @@ import butterknife.BindView;
 import butterknife.ButterKnife;
 import butterknife.OnClick;
 import butterknife.Unbinder;
+import ru.androidacademy.msk.NewsApp.FragmentInteraction;
 import ru.androidacademy.msk.NewsApp.R;
 
-public class AboutFragment extends Fragment {
+public class AboutFragment extends Fragment implements FragmentInteraction.OnBackPressListener {
 
     private Unbinder unbinder;
 
@@ -32,12 +33,7 @@ public class AboutFragment extends Fragment {
     @BindString(R.string.git_url) String GIT_URL;
     @BindString(R.string.tg_url) String TG_URL;
 
-   // @BindView(R.id.btn_vk) Button btn_vk;
-   // @BindView(R.id.btn_git) Button btn_git;
-   // @BindView(R.id.btn_telegram) Button btn_telegram;
-
     @BindView(R.id.et_feedback) TextView feedback_message;
-   // @BindView(R.id.btn_sendMessage) Button btn_sendMessage;
     @BindView(R.id.information) View linear_layout;
 
     private  static final int LAYOUT =  R.layout.fragment_about;
@@ -51,13 +47,6 @@ public class AboutFragment extends Fragment {
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
         View view = inflater.inflate(LAYOUT, container, false);
         unbinder = ButterKnife.bind(this, view);
-
-        // ActionBar actionBar = getSupportActionBar();
-        // if (actionBar != null) {
-        //     actionBar.setDisplayHomeAsUpEnabled(true);
-        //}
-
-        //  Objects.requireNonNull(getSupportActionBar()).setDisplayHomeAsUpEnabled(true);
 
         return view;
     }
@@ -97,6 +86,12 @@ public class AboutFragment extends Fragment {
         }
     }
 
+    @Override
+    public void onBackPressed() {
+        ((MainActivity)Objects.requireNonNull(getActivity())).showNewsList();
+    }
+
+
     private void sendMessage(String message){
 
         Intent intent = new Intent(Intent.ACTION_SENDTO);
@@ -112,7 +107,6 @@ public class AboutFragment extends Fragment {
         }
         Toast.makeText(getContext(), getText(R.string.toast), Toast.LENGTH_LONG).show();
     }
-
 //    @Override
 //    public boolean onOptionsItemSelected(@NonNull MenuItem item) {
 //        switch (item.getItemId()) {
